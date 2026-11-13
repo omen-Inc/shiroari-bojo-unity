@@ -63,7 +63,6 @@ namespace ShiroariBojo.UI
         [SerializeField] private TMP_Text messageText;
         [SerializeField] private Button cancelButton;
         [SerializeField] private Button useButton;
-        [SerializeField] private Button mulliganButton;
         [SerializeField] private Button endTurnButton;
         [SerializeField] private Image endTurnImage;
         [SerializeField] private RectTransform handContainer;
@@ -133,7 +132,6 @@ namespace ShiroariBojo.UI
             termiteStartButton.onClick.AddListener(() => StartGame(Side.Termite));
             cancelButton.onClick.AddListener(OnCancel);
             useButton.onClick.AddListener(OnUse);
-            mulliganButton.onClick.AddListener(OnMulligan);
             endTurnButton.onClick.AddListener(OnEndTurn);
             againButton.onClick.AddListener(() => StartGame(_human));
             swapSideButton.onClick.AddListener(() => StartGame(_human.Opponent()));
@@ -338,18 +336,21 @@ namespace ShiroariBojo.UI
             ApplyHuman(GameAction.Play(o.Uid));
         }
 
+        /// <summary>
+        /// ターン終了。1枚も使っていないターン(Engine.CanMulligan)は、sb-proto と同じく
+        /// 手詰まり防止のシート(1枚捨てて引き直す / 捨てずにターン終了)を出す
+        /// </summary>
         public void OnEndTurn()
         {
             if (!HumanCanAct || _state.Phase != Phase.Main) return;
+            if (Engine.CanMulligan(_state))
+            {
+                _selectedUid = -1;
+                _mulliganOpen = true;
+                Render();
+                return;
+            }
             ApplyHuman(GameAction.EndTurn());
-        }
-
-        public void OnMulligan()
-        {
-            if (!HumanCanAct || !Engine.CanMulligan(_state)) return;
-            _selectedUid = -1;
-            _mulliganOpen = true;
-            Render();
         }
 
         private PlayOption SelectedOption()
@@ -409,7 +410,6 @@ namespace ShiroariBojo.UI
             messageText.text = Message(s, sel, canAct);
             cancelButton.gameObject.SetActive(sel != null && canAct);
             useButton.gameObject.SetActive(confirmUntargetedCards && sel != null && sel.Usable && !sel.NeedsTarget && canAct);
-            mulliganButton.gameObject.SetActive(canAct && Engine.CanMulligan(s));
             endTurnButton.interactable = canAct && s.Phase == Phase.Main;
             endTurnImage.color = UiPalette.SideColor(_human);
 
@@ -470,9 +470,7 @@ namespace ShiroariBojo.UI
             if (!canAct) return "";
             if (sel == null)
             {
-                var msg = $"カードを選んでください(行動力 残り{s.Player(_human).Ap})";
-                if (Engine.CanMulligan(s)) msg += $"\n<size=80%><color={UiPalette.Tag(UiPalette.Muted)}>このターンはまだ1枚も使っていません。「1枚捨てて引き直す」でターンを終えられます</color></size>";
-                return msg;
+                return $"カードを選んでください(行動力 残り{s.Player(_human).Ap})";
             }
             var d = sel.Def;
             var sb = new StringBuilder($"<b>{d.Name}</b> <size=80%>コスト{sel.Cost} ・ {HandCardView.KindLabel(d)}</size>");
@@ -625,15 +623,20 @@ namespace ShiroariBojo.UI
 
         private void RenderMulligan()
         {
+            // sb-proto の openMulligan と同じ文言・選択肢(取り消しはなく、どちらを選んでもターンが終わる)
             var rows = new List<ChoiceRow>();
             foreach (var c in _state.Player(_human).Hand)
             {
                 int uid = c.Uid;
-                rows.Add(new ChoiceRow { Label = $"{CardLabel(c.DefId)} を捨てる", OnClick = () => ApplyHuman(GameAction.EndTurn(uid)) });
+                var d = _db.Get(c.DefId);
+                rows.Add(new ChoiceRow
+                {
+                    Label = $"「<color={UiPalette.Tag(UiPalette.UserColor(d.User))}><b>{d.Name}</b></color>」を捨てる",
+                    OnClick = () => ApplyHuman(GameAction.EndTurn(uid)),
+                });
             }
-            choicePanel.Show("1枚捨てて引き直す",
-                "このターンは1枚も使っていないので、手札を1枚捨てて1枚引けます。選ぶとターンが終わります", rows,
-                null, false, null, "やめる", () => { _mulliganOpen = false; Render(); });
+            choicePanel.Show("1枚も使いませんでした", "手札を1枚捨てて1枚引けます(任意)", rows,
+                "捨てずにターン終了", true, () => ApplyHuman(GameAction.EndTurn()));
         }
 
         // ───────── 演出・結果 ─────────
@@ -674,7 +677,7 @@ namespace ShiroariBojo.UI
             else if (w.Value == _human)
             {
                 resultTitleText.text = "勝利!";
-                resultTitleText.color = UiPalette.Pest;
+                resultTitleText.color = UiPalette.SideColor(w.Value);
             }
             else
             {
