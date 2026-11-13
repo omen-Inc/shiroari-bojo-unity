@@ -1,0 +1,535 @@
+{
+  "source": {
+    "databaseId": "89587a8f5c2d4fa583151ddc8df62d42",
+    "note": "Notion のカード一覧DBの写し。npm run spec:sync が生成する。手で編集しない"
+  },
+  "cards": [
+    {
+      "id": "worker-yamato",
+      "name": "職アリ-ヤマト",
+      "category": "シロアリ",
+      "status": "確定",
+      "cost": 1,
+      "counts": {
+        "termite": 4,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "1枚分として数える。基本の侵食カード",
+      "favored": "シロアリ側",
+      "memo": "",
+      "basis": "エサを採り、巣や蟻道を作る。コロニーの大多数を占める",
+      "notionPageId": "3f951e17036081a0a973dc477b6d4046"
+    },
+    {
+      "id": "worker-ie",
+      "name": "職アリ-イエ",
+      "category": "シロアリ",
+      "status": "確定",
+      "cost": 1,
+      "counts": {
+        "termite": 12,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "1枚分として数える。基本の侵食カード",
+      "favored": "シロアリ側",
+      "memo": "",
+      "basis": "エサを採り、巣や蟻道を作る。コロニーの大多数を占める",
+      "notionPageId": "3ff51e17036081d78b94cadb5a1690f8"
+    },
+    {
+      "id": "worker-kanzai",
+      "name": "職アリ-カンザイ",
+      "category": "シロアリ",
+      "status": "確定",
+      "cost": 1,
+      "counts": {
+        "termite": 4,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "1枚分として数える。基本の侵食カード",
+      "favored": "シロアリ側",
+      "memo": "",
+      "basis": "エサを採り、巣や蟻道を作る。コロニーの大多数を占める",
+      "notionPageId": "3ff51e17036081c887aac8a96a6b0ae8"
+    },
+    {
+      "id": "soldier-yamato",
+      "name": "兵アリ-ヤマト",
+      "category": "シロアリ",
+      "status": "たたき台",
+      "cost": 2,
+      "counts": {
+        "termite": 2,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "1枚分として数える。いるポイントへの薬剤散布を1回無効化する（兵アリ1枚につき1回）。ベイト工法は防げない",
+      "favored": "シロアリ側",
+      "memo": "",
+      "basis": "外敵から巣を守る",
+      "notionPageId": "3f951e170360815b912dfa6e2925bd4f"
+    },
+    {
+      "id": "soldier-ie",
+      "name": "兵アリ-イエ",
+      "category": "シロアリ",
+      "status": "たたき台",
+      "cost": 2,
+      "counts": {
+        "termite": 5,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "1枚分として数える。いるポイントへの薬剤散布を1回無効化する（兵アリ1枚につき1回）。ベイト工法は防げない",
+      "favored": "シロアリ側",
+      "memo": "",
+      "basis": "外敵から巣を守る",
+      "notionPageId": "3ff51e17036081fcab5aed04dd455c0f"
+    },
+    {
+      "id": "soldier-kanzai",
+      "name": "兵アリ-カンザイ",
+      "category": "シロアリ",
+      "status": "たたき台",
+      "cost": 2,
+      "counts": {
+        "termite": 2,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "1枚分として数える。いるポイントへの薬剤散布を1回無効化する（兵アリ1枚につき1回）。ベイト工法は防げない",
+      "favored": "シロアリ側",
+      "memo": "",
+      "basis": "外敵から巣を守る",
+      "notionPageId": "3ff51e17036081e0a495e0c8ff1b8b57"
+    },
+    {
+      "id": "winged-yamato",
+      "name": "羽アリ-ヤマト",
+      "category": "シロアリ",
+      "status": "たたき台",
+      "cost": 2,
+      "counts": {
+        "termite": 1,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "1枚分として数える。次の自分のターン開始時に女王アリと入れ替わり、同種の職アリを山札から2枚手札に加える",
+      "favored": "シロアリ側",
+      "memo": "女王アリになる前に駆除されると女王アリにはならない",
+      "basis": "巣を離れて飛び立ち、新しいコロニーを作る（群飛）",
+      "notionPageId": "3f951e1703608108bb57e0a5e787814a"
+    },
+    {
+      "id": "winged-ie",
+      "name": "羽アリ-イエ",
+      "category": "シロアリ",
+      "status": "たたき台",
+      "cost": 2,
+      "counts": {
+        "termite": 1,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "1枚分として数える。次の自分のターン開始時に女王アリと入れ替わり、同種の職アリを山札から2枚手札に加える",
+      "favored": "シロアリ側",
+      "memo": "女王アリになる前に駆除されると女王アリにはならない",
+      "basis": "巣を離れて飛び立ち、新しいコロニーを作る（群飛）",
+      "notionPageId": "3ff51e1703608161b547eb27e9fa41b2"
+    },
+    {
+      "id": "winged-kanzai",
+      "name": "羽アリ-カンザイ",
+      "category": "シロアリ",
+      "status": "たたき台",
+      "cost": 2,
+      "counts": {
+        "termite": 1,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "1枚分として数える。次の自分のターン開始時に女王アリと入れ替わり、同種の職アリを山札から2枚手札に加える",
+      "favored": "シロアリ側",
+      "memo": "女王アリになる前に駆除されると女王アリにはならない",
+      "basis": "巣を離れて飛び立ち、新しいコロニーを作る（群飛）",
+      "notionPageId": "3ff51e17036081b2bbe8dbf5f31034cb"
+    },
+    {
+      "id": "queen-ie",
+      "name": "女王アリ-イエ",
+      "category": "シロアリ",
+      "status": "確定",
+      "cost": null,
+      "counts": {
+        "termite": 0,
+        "pest": 0,
+        "outside": 1
+      },
+      "effect": "山札には加えないカード。1枚分として数える。成ったとき、同種の職アリを山札から2枚手札に加える（山札にない場合は空振り）",
+      "favored": "シロアリ側",
+      "memo": "手札からは出さず、羽アリが成ったときだけ場に出る。コストなし",
+      "basis": "羽アリは女王と王から生まれる次世代の繁殖虫",
+      "notionPageId": "3ff51e170360814bb07cf7d4981347f2"
+    },
+    {
+      "id": "queen-kanzai",
+      "name": "女王アリ-カンザイ",
+      "category": "シロアリ",
+      "status": "確定",
+      "cost": null,
+      "counts": {
+        "termite": 0,
+        "pest": 0,
+        "outside": 1
+      },
+      "effect": "山札には加えないカード。1枚分として数える。成ったとき、同種の職アリを山札から2枚手札に加える（山札にない場合は空振り）",
+      "favored": "シロアリ側",
+      "memo": "手札からは出さず、羽アリが成ったときだけ場に出る。コストなし",
+      "basis": "羽アリは女王と王から生まれる次世代の繁殖虫",
+      "notionPageId": "3ff51e17036081c68fcef7627e9d0759"
+    },
+    {
+      "id": "queen-yamato",
+      "name": "女王アリ-ヤマト",
+      "category": "シロアリ",
+      "status": "確定",
+      "cost": null,
+      "counts": {
+        "termite": 0,
+        "pest": 0,
+        "outside": 1
+      },
+      "effect": "山札には加えないカード。1枚分として数える。成ったとき、同種の職アリを山札から2枚手札に加える（山札にない場合は空振り）",
+      "favored": "シロアリ側",
+      "memo": "手札からは出さず、羽アリが成ったときだけ場に出る。コストなし",
+      "basis": "羽アリは女王と王から生まれる次世代の繁殖虫",
+      "notionPageId": "3f951e17036081d589f5eaff39131fa6"
+    },
+    {
+      "id": "reinforce",
+      "name": "増援",
+      "category": "中立",
+      "status": "確定",
+      "cost": 1,
+      "counts": {
+        "termite": 5,
+        "pest": 7,
+        "outside": 0
+      },
+      "effect": "自分の山札から2枚ドローする",
+      "favored": "どちらでもない",
+      "memo": "名称は仮",
+      "basis": "",
+      "notionPageId": "3f951e170360811ba439cdedac27d79f"
+    },
+    {
+      "id": "scout",
+      "name": "偵察",
+      "category": "中立",
+      "status": "確定",
+      "cost": 1,
+      "counts": {
+        "termite": 1,
+        "pest": 4,
+        "outside": 0
+      },
+      "effect": "相手の手札を全て確認する（相手の手札がないときは使えない）",
+      "favored": "どちらでもない",
+      "memo": "名称は仮",
+      "basis": "",
+      "notionPageId": "3f951e170360812a8656fabfd2d18fd5"
+    },
+    {
+      "id": "disrupt",
+      "name": "妨害",
+      "category": "中立",
+      "status": "確定",
+      "cost": 1,
+      "counts": {
+        "termite": 1,
+        "pest": 4,
+        "outside": 0
+      },
+      "effect": "相手の手札をランダムに1枚捨てさせる（相手の手札がないときは使えない）",
+      "favored": "どちらでもない",
+      "memo": "名称は仮",
+      "basis": "",
+      "notionPageId": "3f951e170360813dbce5c023c2cb8bbf"
+    },
+    {
+      "id": "foresight",
+      "name": "予知",
+      "category": "中立",
+      "status": "確定",
+      "cost": 1,
+      "counts": {
+        "termite": 2,
+        "pest": 4,
+        "outside": 0
+      },
+      "effect": "自分の山札の上3枚を見て1枚を手札に加え、残りを好きな順で山札の下に置く",
+      "favored": "どちらでもない",
+      "memo": "名称は仮",
+      "basis": "",
+      "notionPageId": "3f951e17036081b2bb33d2efc55005cf"
+    },
+    {
+      "id": "barrier",
+      "name": "バリア工法",
+      "category": "防除",
+      "status": "たたき台",
+      "cost": 2,
+      "counts": {
+        "termite": 0,
+        "pest": 9,
+        "outside": 0
+      },
+      "effect": "指定ポイントに3ターンの間、シロアリカードを置けなくする",
+      "favored": "防除側",
+      "memo": "効果はクライアント確認後にFIX",
+      "basis": "土壌処理によるバリア工法",
+      "notionPageId": "3f951e17036081538c6fd046e80cfaa4"
+    },
+    {
+      "id": "card-44c93a77",
+      "name": "リフォーム",
+      "category": "防除",
+      "status": "没",
+      "cost": null,
+      "counts": {
+        "termite": 0,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "指定ポイントを3ターン使用不可にし、ポイントを1枠増やす",
+      "favored": "防除側",
+      "memo": "勝利条件の分母が変わるためバランスへの影響が大きい。慎重に扱う",
+      "basis": "",
+      "notionPageId": "3f951e170360818b8bbceea4f9a5b78d"
+    },
+    {
+      "id": "card-e06e0d44",
+      "name": "床下換気",
+      "category": "防除",
+      "status": "没",
+      "cost": null,
+      "counts": {
+        "termite": 0,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "指定ポイントは梅雨入りの効果を受けない",
+      "favored": "防除側",
+      "memo": "",
+      "basis": "床下の換気・防湿で湿気を取る",
+      "notionPageId": "3f951e170360819f9588ccd30b44eae8"
+    },
+    {
+      "id": "card-2896fdeb",
+      "name": "防蟻シート",
+      "category": "防除",
+      "status": "没",
+      "cost": null,
+      "counts": {
+        "termite": 0,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "隣接する複数のポイントにバリアを張る",
+      "favored": "防除側",
+      "memo": "ポイント同士の隣接関係が未定義",
+      "basis": "防蟻シートの施工",
+      "notionPageId": "3f951e1703608158af64e02abec63280"
+    },
+    {
+      "id": "card-62903f75",
+      "name": "木部処理",
+      "category": "防除",
+      "status": "没",
+      "cost": null,
+      "counts": {
+        "termite": 0,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "指定ポイントの完全侵食に必要な枚数を4枚にする",
+      "favored": "防除側",
+      "memo": "効果はクライアント確認後にFIX",
+      "basis": "木部への薬剤処理・注入",
+      "notionPageId": "3f951e17036081d0a97ec94b88635433"
+    },
+    {
+      "id": "spray",
+      "name": "薬剤散布",
+      "category": "駆除",
+      "status": "たたき台",
+      "cost": 1,
+      "counts": {
+        "termite": 0,
+        "pest": 15,
+        "outside": 0
+      },
+      "effect": "指定ポイントのシロアリカードを1枚除去する（仮：最後に置かれたカード）",
+      "favored": "防除側",
+      "memo": "兵アリがいる場合は1回無効化される",
+      "basis": "薬剤散布処理",
+      "notionPageId": "3f951e170360812b9451d6c58d47857c"
+    },
+    {
+      "id": "bait",
+      "name": "ベイト工法",
+      "category": "駆除",
+      "status": "たたき台",
+      "cost": 2,
+      "counts": {
+        "termite": 0,
+        "pest": 7,
+        "outside": 0
+      },
+      "effect": "置いてから2回目の自分のターン開始時に、指定ポイントのヤマト・イエシロアリをすべて除去する（カンザイは対象外）",
+      "favored": "防除側",
+      "memo": "同じポイントへの重ね置きは不可（仮）。効果はクライアント確認後にFIX",
+      "basis": "ベイト剤の設置",
+      "notionPageId": "3f951e17036081e8ab5dece1cb14c1cf"
+    },
+    {
+      "id": "card-47f39bc2",
+      "name": "大規模点検・駆除",
+      "category": "駆除",
+      "status": "没",
+      "cost": null,
+      "counts": {
+        "termite": 0,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "盤面の全シロアリカードを除去する",
+      "favored": "防除側",
+      "memo": "山札に1枚のみのレアカード・一発逆転枠",
+      "basis": "大規模な点検・駆除",
+      "notionPageId": "3f951e1703608141bd01d428c67a130b"
+    },
+    {
+      "id": "import-furniture",
+      "name": "輸入家具購入",
+      "category": "イベント（シロアリ側）",
+      "status": "確定",
+      "cost": 1,
+      "counts": {
+        "termite": 3,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "【即時】山札からカンザイシロアリを1枚手札に加える（山札にない場合は空振り。仮：山札で最初に見つかったもの）",
+      "favored": "シロアリ側",
+      "memo": "場には残らない",
+      "basis": "アメリカカンザイシロアリは輸入家具・木材に紛れて侵入する",
+      "notionPageId": "3f951e170360819c9254d7a2e8bea7bd"
+    },
+    {
+      "id": "swarm",
+      "name": "大量発生",
+      "category": "イベント（シロアリ側）",
+      "status": "確定",
+      "cost": 1,
+      "counts": {
+        "termite": 6,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "指定ポイントに次の自分のターンまで、防除・駆除カードを置けなくする。シロアリ側はそのポイントにカードを置ける",
+      "favored": "シロアリ側",
+      "memo": "名称は仮",
+      "basis": "",
+      "notionPageId": "3f951e17036081dfac9fcb535f9dedbd"
+    },
+    {
+      "id": "card-de88e519",
+      "name": "炎天下",
+      "category": "季節",
+      "status": "没",
+      "cost": null,
+      "counts": {
+        "termite": 0,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "【永続】ヤマトシロアリの完全侵食に必要な枚数が4枚になる",
+      "favored": "防除側",
+      "memo": "",
+      "basis": "乾燥でヤマトシロアリが弱まる",
+      "notionPageId": "3f951e17036081778446feee4ebb56b9"
+    },
+    {
+      "id": "card-9cbfc029",
+      "name": "群飛の季節",
+      "category": "季節",
+      "status": "没",
+      "cost": null,
+      "counts": {
+        "termite": 0,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "【永続】ヤマトシロアリ・イエシロアリは1ターンに同じポイントへ2枚置ける",
+      "favored": "シロアリ側",
+      "memo": "",
+      "basis": "ヤマトシロアリは4〜5月、イエシロアリは6〜7月に群飛する",
+      "notionPageId": "3f951e17036081829e4cd6a68d74f7e2"
+    },
+    {
+      "id": "card-e5b26640",
+      "name": "集中対処",
+      "category": "効果（防除側）",
+      "status": "没",
+      "cost": null,
+      "counts": {
+        "termite": 0,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "指定ポイントに1ターン、シロアリカードを置けなくする。防除側はそのポイントにカードを置ける",
+      "favored": "防除側",
+      "memo": "名称は仮",
+      "basis": "",
+      "notionPageId": "3f951e1703608128bf08fb6e2fc962d6"
+    },
+    {
+      "id": "card-99a27b8e",
+      "name": "冬将軍",
+      "category": "季節",
+      "status": "没",
+      "cost": null,
+      "counts": {
+        "termite": 0,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "【永続】全シロアリの完全侵食に必要な枚数が4枚になる",
+      "favored": "防除側",
+      "memo": "",
+      "basis": "低温でシロアリの活動が鈍る",
+      "notionPageId": "3f951e1703608198adabe9b59c9a7dab"
+    },
+    {
+      "id": "card-b4d5c157",
+      "name": "梅雨入り",
+      "category": "季節",
+      "status": "没",
+      "cost": null,
+      "counts": {
+        "termite": 0,
+        "pest": 0,
+        "outside": 0
+      },
+      "effect": "【永続】乾燥箇所にもヤマトシロアリを置ける。上書き後も置かれたヤマトシロアリは残る（新しくは置けない）",
+      "favored": "シロアリ側",
+      "memo": "",
+      "basis": "長雨や水漏れで木部が湿る。ヤマトシロアリは水を運べず湿った場所で活動する",
+      "notionPageId": "3f951e170360811fac54fb5d17513cc0"
+    }
+  ]
+}
