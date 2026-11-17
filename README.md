@@ -52,7 +52,7 @@ P=/Users/a.nakashima/shiroari-bojo-unity
     -simGames 1000 -simSeed 1 [-simOut /path/to/result.txt]
   ```
 
-結果はコンソールと `Logs/Simulation/sim-<日時>.txt` に出ます(`-simOut` で出力先を変更できます)。出る項目は、陣営別の勝率(先攻別も)、平均ターン数、平均完全侵食数、枯れ木が倒れた割合、カード別使用率(使った回数 / 手札に来た回数)です。シードが同じなら結果も同じになります。
+結果はコンソールと `Logs/Simulation/sim-<日時>.txt` に出ます(`-simOut` で出力先を変更できます)。`-simJson <パス>` を付けると、夜間の自動開発の報告用に JSON も書き出します(`{"games":1000,"seed":"1","winRate":{"termite":0.37,"pest":0.63},"draws":0,"avgTurns":34.1,"cards":[{"id":"...","name":"...","side":"termite|pest|neutral","useRate":0.88,"winContribution":-0.01,"drawn":3738,"played":3277,"gamesUsed":997}]}`。率は 0〜1。`useRate` は使った回数 / 手札に来た回数、`winContribution` はそのカードを使った (試合, 陣営) の勝率 − その陣営の全体勝率で、Web 版 shiroari-bojo の `npm run sim` と同じ定義です。山札に入らないカードは出しません)。出る項目は、陣営別の勝率(先攻別も)、平均ターン数、平均完全侵食数、枯れ木が倒れた割合、カード別使用率(使った回数 / 手札に来た回数)です。シードが同じなら結果も同じになります。
 
 ## Core の使い方(画面から呼ぶ API)
 
@@ -77,3 +77,13 @@ Phase(状態の段階)ごとに使える行動は次のとおりです。
 | `ForesightChoice` | `GameAction.ChooseForesight(takeUid, bottomOrder)`(めくったカードは `state.ForesightCards`。bottomOrder は先頭ほど上、末尾が山札の一番下) |
 | `HandLimitDiscard` | `GameAction.DiscardForHandLimit(uids)`(`state.HandLimitDiscardCount` 枚) |
 | `GameOver` | なし(`Winner`・`WinReason`) |
+
+## 夜間の自動開発
+
+Windows のデスクトップPCで毎晩 1:00 に、`ready` ラベルの Issue をヘッドレスの Claude Code が処理し、`nightly` ブランチにマージします(仕組みは `ai-team-config` の `nightly/`)。このリポジトリの設定は `nightly.config.json` です。
+
+- 夜間に触るのはルールと CPU(`Assets/Scripts/Core`)、EditMode テスト、シミュレーターの Editor スクリプトだけです。シーン・プレハブ・UI・`cards.json`・ProjectSettings は触りません(`nightly.config.json` の `rules`)
+- テストとシミュレーターは `nightly/unity_batch.ps1` がバッチモードで流します(Unity.exe は `ProjectSettings/ProjectVersion.txt` の版から決めます)
+- 夜間の開始時にこのプロジェクトを Unity エディタが開いていたら、エディタは閉じずにその晩の処理をやめ、Slack に理由を報告します。夜間に処理させたいときは、Windows の clone(`C:\Users\anaka\shiroari-bojo-unity`)のエディタを閉じておいてください
+- Unity が書き戻すフォントアセット(`restoreAfterUnity`)は、Unity を動かすたびに `git checkout --` で戻します。夜間の開始時に、未コミットの変更がこのフォントだけなら戻してから続けます(ほかのファイルにも変更があれば、何も消さずにその晩は止まります)
+- ログと報告は `logs/nightly/` に出ます(コミットしません)

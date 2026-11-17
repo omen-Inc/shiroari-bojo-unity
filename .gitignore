@@ -12,6 +12,8 @@
 /[Bb]uild/
 /[Bb]uilds/
 /[Ll]ogs/
+# 夜間の自動開発のログ(logs/nightly/。上の /[Ll]ogs/ でも除外されるが、明示しておく)
+logs/
 /[Uu]ser[Ss]ettings/
 *.log
 

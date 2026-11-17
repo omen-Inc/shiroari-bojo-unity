@@ -1,0 +1,38 @@
+{
+  "projectName": "シロアリボージョ Unity 版",
+  "repo": "omen-Inc/shiroari-bojo-unity",
+  "branch": "nightly",
+  "maxIssues": 3,
+  "issueTimeoutMinutes": 60,
+  "install": "",
+  "sim": "powershell -NoProfile -ExecutionPolicy Bypass -File {nightlyDir}/unity_batch.ps1 -Mode sim -Games 1000 -Out {out}",
+  "simTimeoutMinutes": 15,
+  "sideLabels": { "pest": "防除側", "termite": "シロアリ側" },
+  "unity": {
+    "editorPath": "",
+    "testPlatform": "EditMode",
+    "simMethod": "ShiroariBojo.EditorTools.SimulationMenu.RunBatch",
+    "simArgs": "-simGames {games} -simSeed 1 -simJson {out}",
+    "timeoutMinutes": 20
+  },
+  "restoreAfterUnity": [
+    "Assets/Fonts/NotoSansJP/NotoSansJP-Regular SDF.asset",
+    "Assets/Fonts/NotoSansJP/NotoSansJP-Bold SDF.asset"
+  ],
+  "checks": [
+    "powershell -NoProfile -ExecutionPolicy Bypass -File {nightlyDir}/unity_batch.ps1 -Mode test",
+    "powershell -NoProfile -ExecutionPolicy Bypass -File {nightlyDir}/unity_batch.ps1 -Mode sim -Games 1000"
+  ],
+  "extraAllowedTools": [
+    "Bash(powershell -NoProfile -ExecutionPolicy Bypass -File {nightlyDir}/unity_batch.ps1 -Mode test)",
+    "Bash(powershell -NoProfile -ExecutionPolicy Bypass -File {nightlyDir}/unity_batch.ps1 -Mode sim -Games 1000)"
+  ],
+  "rules": [
+    "変更してよいのは、ルールと CPU(Assets/Scripts/Core/)、EditMode テスト(Assets/Tests/EditMode/)、シミュレーターの Editor スクリプト(Assets/Scripts/Editor/)と、それらの .meta だけ",
+    "シーン・プレハブ・UI(Assets/Scenes/・Assets/Prefabs/・Assets/Scripts/UI/)、Assets/Data/cards.json、Assets/Fonts/、Assets/TextMesh Pro/、ProjectSettings/、Packages/ は変更しない。これらの変更が要る Issue は needs-omen にする",
+    "ルールを変えたら Assets/Tests/EditMode/ にテストを足し、検収のテスト(-Mode test)を全件通す",
+    "バランスに関わる変更(ルールの数値・カードの効果・CPU の評価)では、検収のシミュレーター(-Mode sim -Games 1000)を変更前と変更後の両方で実行し、勝率・平均ターン数・使用率の変化を PR 本文と結果JSONの notes に書く",
+    "新しい .cs ファイルを足したら、テストを流したあとに Unity が作る .meta も一緒に commit する",
+    "仕様の写しは {home}/shiroari-bojo/docs/spec/(Web 版のリポジトリの clone。読むだけで変更しない)。プロジェクトの CLAUDE.md の決まり(Core は UnityEngine を参照しない、状態の変更は Engine.Apply だけ、乱数は Rng など)に従う"
+  ]
+}
