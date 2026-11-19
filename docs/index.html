@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="color-scheme" content="light">
+<title>シロアリボージョ ルールとカード一覧</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light;
+  --yamato: #c27a2c;
+  --ie: #b8402f;
+  --kanzai: #6d52a6;
+  --boujo: #2b7d72;
+  --kujo: #2f6fa8;
+  --event: #d0782c;
+  --neutral: #6b7480;
+  --water: #4f8fb5;
+  --dry: #a9855a;
+  --upper: #6c7a88;
+  --deadtree: #c9962c;
+  --paper: #fffdf8;
+  --ink: #2b231c;
+  --line: #e6dccb;
+  --soft: #f6efe2;
+  --termite-side: #b8402f;
+  --pest-side: #2b7d72;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.wrap { max-width: 720px; margin: 0 auto; padding: 0 16px 48px; }
+h1, h2, h3 { font-family: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", sans-serif; line-height: 1.4; }
+h1 { font-size: 1.7rem; margin: 0 0 .5rem; }
+h2 { font-size: 1.4rem; margin: 2.8rem 0 .8rem; padding-bottom: .3rem; border-bottom: 3px solid var(--line); }
+h3 { font-size: 1.1rem; margin: 1.6rem 0 .4rem; }
+p { margin: .6rem 0; }
+ul, ol { padding-left: 1.4rem; margin: .6rem 0; }
+li { margin: .3rem 0; }
+a { color: var(--kujo); }
+.hero { padding: 28px 0 8px; }
+.lead { font-size: 1.05rem; }
+.note {
+  background: var(--soft); border-left: 5px solid var(--deadtree);
+  padding: .6rem .9rem; border-radius: 6px; margin: 1rem 0;
+}
+.toc { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: .6rem 1rem; }
+.toc ol { margin: 0; }
+.toc a { text-decoration: none; }
+.small { font-size: .9rem; }
+.muted { color: #5d5247; }
+
+dl.terms { margin: 0; }
+dl.terms dt { font-weight: 700; margin-top: .9rem; font-family: "Zen Maru Gothic", sans-serif; }
+dl.terms dd { margin: 0; }
+
+.win { display: grid; grid-template-columns: 1fr; gap: 12px; }
+@media (min-width: 560px) { .win { grid-template-columns: 1fr 1fr; } }
+.win > div { border-radius: 12px; padding: 1rem; color: #fff; }
+.win .t { background: var(--termite-side); }
+.win .p { background: var(--pest-side); }
+.win .who { font-size: .95rem; margin: 0; }
+.win .big { font-family: "Zen Maru Gothic", sans-serif; font-size: 1.35rem; font-weight: 700; line-height: 1.45; margin: .3rem 0; }
+.win p { margin: .3rem 0; }
+
+.steps { list-style: none; padding: 0; counter-reset: step; }
+.steps > li {
+  counter-increment: step; position: relative; background: #fff; border: 1px solid var(--line);
+  border-radius: 10px; padding: .7rem .9rem .7rem 3.2rem; margin: 0 0 22px;
+}
+.steps > li::before {
+  content: counter(step); position: absolute; left: .8rem; top: .7rem; width: 1.8rem; height: 1.8rem;
+  border-radius: 50%; background: var(--boujo); color: #fff; text-align: center; line-height: 1.8rem;
+  font-family: "Zen Maru Gothic", sans-serif; font-weight: 700;
+}
+.steps > li:not(:last-child)::after {
+  content: ""; position: absolute; left: 50%; bottom: -16px; margin-left: -8px;
+  border: 8px solid transparent; border-top: 10px solid var(--line); border-bottom: 0;
+}
+.steps b { font-family: "Zen Maru Gothic", sans-serif; }
+
+table { border-collapse: collapse; width: 100%; background: #fff; }
+th, td { border: 1px solid var(--line); padding: .5rem .6rem; text-align: left; vertical-align: top; }
+th { background: var(--soft); }
+.tag {
+  display: inline-block; color: #fff; border-radius: 999px; padding: 0 .7em; font-size: .9rem;
+  line-height: 1.7; white-space: nowrap; font-weight: 700;
+}
+.tag.water { background: var(--water); }
+.tag.dry { background: var(--dry); }
+.tag.upper { background: var(--upper); }
+.tag.dead { background: var(--deadtree); }
+.sp { display: inline-block; color: #fff; border-radius: 6px; padding: 0 .5em; font-size: .9rem; margin: 0 2px 2px 0; font-weight: 700; }
+.sp.yamato { background: var(--yamato); }
+.sp.ie { background: var(--ie); }
+.sp.kanzai { background: var(--kanzai); }
+.tablewrap { overflow-x: auto; }
+
+.two { display: grid; gap: 10px; grid-template-columns: 1fr; }
+@media (min-width: 560px) { .two { grid-template-columns: 1fr 1fr; } }
+.box { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: .6rem .9rem; }
+.box h3 { margin-top: .2rem; }
+
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin: .8rem 0; }
+.filters button {
+  font: inherit; font-weight: 700; padding: .45rem .9rem; min-height: 44px; border-radius: 999px;
+  border: 2px solid var(--ink); background: #fff; color: var(--ink); cursor: pointer;
+}
+.filters button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+.count-line { font-size: .95rem; color: #5d5247; }
+
+.cards { display: grid; gap: 12px; grid-template-columns: 1fr; padding: 0; list-style: none; margin: .6rem 0; }
+.card { background: #fff; border: 1px solid var(--line); border-left: 8px solid var(--neutral); border-radius: 10px; padding: .6rem .9rem .7rem; margin: 0; }
+.card.yamato { border-left-color: var(--yamato); }
+.card.ie { border-left-color: var(--ie); }
+.card.kanzai { border-left-color: var(--kanzai); }
+.card.boujo { border-left-color: var(--boujo); }
+.card.kujo { border-left-color: var(--kujo); }
+.card.event { border-left-color: var(--event); }
+.card.neutral { border-left-color: var(--neutral); }
+.card .head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.card .name { font-family: "Zen Maru Gothic", sans-serif; font-weight: 700; font-size: 1.15rem; margin: 0; }
+.chip { display: inline-block; color: #fff; border-radius: 6px; padding: 0 .55em; font-size: .9rem; font-weight: 700; line-height: 1.7; }
+.chip.yamato { background: var(--yamato); }
+.chip.ie { background: var(--ie); }
+.chip.kanzai { background: var(--kanzai); }
+.chip.boujo { background: var(--boujo); }
+.chip.kujo { background: var(--kujo); }
+.chip.event { background: var(--event); }
+.chip.neutral { background: var(--neutral); }
+.chip.tuning { background: #fff; color: #8a5a00; border: 2px dashed #c9962c; line-height: 1.5; }
+.chip.queen { background: #fff; color: var(--ink); border: 2px solid var(--ink); line-height: 1.5; }
+.card .meta { font-size: .95rem; margin: .3rem 0; color: #4a4036; }
+.card .meta b { font-weight: 700; }
+.card .effect { margin: .3rem 0; }
+.card .sub { font-size: .95rem; color: #4a4036; margin: .2rem 0 0; }
+.provisional { font-size: .8rem; color: #5d5247; border: 1px solid #b9ab97; border-radius: 4px; padding: 0 .4em; }
+.loaderr { background: #fff0ec; border: 2px solid var(--ie); border-radius: 8px; padding: .8rem 1rem; }
+.loaderr code { background: #fff; padding: 0 .3em; }
+
+details.qa { background: #fff; border: 1px solid var(--line); border-radius: 10px; margin: 8px 0; padding: 0 .9rem; }
+details.qa summary { cursor: pointer; font-weight: 700; padding: .6rem 0; list-style-position: outside; }
+details.qa[open] summary { border-bottom: 1px dashed var(--line); margin-bottom: .4rem; }
+details.qa > div { padding-bottom: .5rem; }
+
+.ask li { margin: .6rem 0; }
+.ask .tuning { color: #8a5a00; font-weight: 700; }
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 3px solid var(--line); font-size: .95rem; }
+svg { max-width: 100%; height: auto; }
+
+@media print {
+  body { font-size: 12pt; }
+  .filters, .count-line.screen-only { display: none !important; }
+  details.qa > div { display: block; }
+  .card, .box, .steps > li, details.qa { break-inside: avoid; }
+  .cards { grid-template-columns: 1fr 1fr; }
+  .win > div, .tag, .sp, .chip { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>シロアリボージョ（仮）<br>ルールとカード一覧</h1>
+  <p class="lead">シロアリ側と防除業者側に分かれて、コンピューター（CPU）と戦うカードゲームです。シロアリ側は家を食い進めて完全に侵食することを、防除業者側はそれを守りきることをめざします。</p>
+  <p class="note">この資料の内容は 2026-11-13 時点の仕様です。未確定の項目を含みます。</p>
+  <nav class="toc" aria-label="目次">
+    <strong>目次</strong>
+    <ol>
+      <li><a href="#terms">はじめに知っておくことば</a></li>
+      <li><a href="#win">勝ち方</a></li>
+      <li><a href="#flow">対戦の流れと1ターンの流れ</a></li>
+      <li><a href="#points">家の8か所と、置けるシロアリ</a></li>
+      <li><a href="#structure">シロアリカードの仕組み</a></li>
+      <li><a href="#cards">カード一覧</a></li>
+      <li><a href="#rules">細かいルール（Q&amp;A）</a></li>
+      <li><a href="#pending">確認中の点（ご意見をお聞かせください）</a></li>
+    </ol>
+  </nav>
+</header>
+
+<main>
+<section id="terms">
+  <h2>1. はじめに知っておくことば</h2>
+  <dl class="terms">
+    <dt>山札（やまふだ）</dt>
+    <dd>まだ引いていないカードの束です。陣営ごとに50枚あります。</dd>
+    <dt>手札（てふだ）</dt>
+    <dd>いま自分の手元にあって、使えるカードです。</dd>
+    <dt>捨て札（すてふだ）</dt>
+    <dd>使い終わったカードや、捨てたカードを置く場所です。山札が尽きても、捨て札を混ぜ直して使うことはありません。</dd>
+    <dt>ターン</dt>
+    <dd>自分の番のことです。シロアリ側と防除業者側が交互に行います。</dd>
+    <dt>コスト（行動力）</dt>
+    <dd>カードを使うときに払うポイントのようなものです。毎ターンのはじめに3になり、余っても次のターンには持ち越せません。</dd>
+    <dt>ポイント</dt>
+    <dd>家の中の「場所」のことです。浴室、キッチン、床下など全部で8か所あり、カードはこの場所に置きます（「得点」ではありません）。</dd>
+    <dt>完全侵食（かんぜんしんしょく）</dt>
+    <dd>1つのポイントにシロアリカードが3枚重なった状態です。そのポイントはシロアリに食い尽くされて「潰れた」ことになり、以後どのカードの対象にもなりません。</dd>
+    <dt>除去（じょきょ）</dt>
+    <dd>場に置かれたシロアリカードを取り除くことです。</dd>
+    <dt>陣営（じんえい）</dt>
+    <dd>シロアリ側か、防除業者側かのことです。</dd>
+  </dl>
+</section>
+
+<section id="win">
+  <h2>2. 勝ち方</h2>
+  <div class="win">
+    <div class="t">
+      <p class="who">シロアリ側の勝ち</p>
+      <p class="big">8か所のうち5か所を完全侵食する</p>
+      <p>8か所の過半数（5か所）を完全侵食すれば勝ちです。</p>
+    </div>
+    <div class="p">
+      <p class="who">防除業者側の勝ち</p>
+      <p class="big">シロアリの山札がなくなるまで守りきる</p>
+      <p>シロアリ側の山札（50枚）が尽きるまで、5か所の完全侵食を許さなければ勝ちです。</p>
+    </div>
+  </div>
+</section>
+
+<section id="flow">
+  <h2>3. 対戦の流れと1ターンの流れ</h2>
+  <h3>対戦の準備</h3>
+  <ul>
+    <li>プレイヤーはシロアリ側か防除業者側を選び、CPUと対戦します。</li>
+    <li>山札は陣営ごとに別々です（シロアリ山札50枚・防除山札50枚）。「中立」のカードは両方の山札に入ります。</li>
+    <li>最初の手札は5枚です。</li>
+    <li>先攻・後攻はじゃんけん、またはコイントスで決め、そのあとは交互にターンを行います。</li>
+  </ul>
+
+  <h3>1ターンの流れ</h3>
+  <ol class="steps">
+    <li><b>ターン開始：行動力が3になる</b><br>余っていた行動力は持ち越しません。このとき山札からカードを引くことはありません。</li>
+    <li><b>カードを使う</b><br>行動力が足りる限り、何枚でも使えます。カードごとに決まったコストを行動力から払います。ただしシロアリカードは、1ターンに同じポイントへ1枚までです。</li>
+    <li><b>手詰まり防止（1枚もカードを使わなかったときだけ）</b><br>補充の前に、手札を1枚捨てて、山札から1枚引くことができます（するかどうかは自由です）。</li>
+    <li><b>ターンの終わりに手札を補充する</b><br>手札が5枚になるまで、自分の山札から引きます。すでに5枚を超えていれば引きません。</li>
+    <li><b>手札上限のチェック</b><br>手札の上限は7枚です。ターンの終わりに8枚以上あるときは、7枚になるまで好きなカードを捨てます。捨てたカードは捨て札になり、山札には戻りません。</li>
+  </ol>
+
+</section>
+
+<section id="points">
+  <h2>4. 家の8か所と、置けるシロアリ</h2>
+  <p>この家は、ふだんは換気や防湿が効いていて乾いている設定です。ヤマトシロアリは水を運べないため、水回りにしか置けません。</p>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>ポイント</th><th>状態</th><th>置けるシロアリ</th></tr></thead>
+    <tbody>
+      <tr><td>浴室・洗面所</td><td><span class="tag water">水回り</span></td><td><span class="sp yamato">ヤマト</span><span class="sp ie">イエ</span></td></tr>
+      <tr><td>キッチン</td><td><span class="tag water">水回り</span></td><td><span class="sp yamato">ヤマト</span><span class="sp ie">イエ</span></td></tr>
+      <tr><td>床下・土台</td><td><span class="tag dry">乾燥箇所</span></td><td><span class="sp ie">イエ</span></td></tr>
+      <tr><td>玄関・框（かまち）</td><td><span class="tag dry">乾燥箇所</span></td><td><span class="sp ie">イエ</span></td></tr>
+      <tr><td>庭の枯れ木</td><td><span class="tag dead">乾燥箇所（特殊）</span></td><td><span class="sp ie">イエ</span></td></tr>
+      <tr><td>ウッドデッキ</td><td><span class="tag dry">乾燥箇所</span></td><td><span class="sp ie">イエ</span></td></tr>
+      <tr><td>梁（はり）・柱</td><td><span class="tag upper">上部</span></td><td><span class="sp ie">イエ</span><span class="sp kanzai">カンザイ</span></td></tr>
+      <tr><td>屋根裏・天井</td><td><span class="tag upper">上部</span></td><td><span class="sp ie">イエ</span><span class="sp kanzai">カンザイ</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small muted">この対応表は、ご確認いただく前提のものです（第8章参照）。</p>
+
+  <h3>特殊なポイント：庭の枯れ木</h3>
+  <ul>
+    <li>完全侵食（倒れる）には、シロアリカードが4枚必要です（ほかのポイントは3枚）。</li>
+    <li>枯れ木が倒れると、全ポイントの完全侵食に必要な枚数が3枚から2枚に減ります。</li>
+  </ul>
+</section>
+
+<section id="structure">
+  <h2>5. シロアリカードの仕組み</h2>
+  <p>シロアリカードは「種類」と「カースト（役割）」の組み合わせでできています。たとえば「ヤマトシロアリの職アリ」「イエシロアリの兵アリ」です。</p>
+  <div class="two">
+    <div class="box">
+      <h3>種類：置ける場所が決まる</h3>
+      <p><span class="sp yamato">ヤマト</span><span class="sp ie">イエ</span><span class="sp kanzai">カンザイ</span></p>
+      <p class="small">どのポイントに置けるかは、第4章の表のとおりです。</p>
+    </div>
+    <div class="box">
+      <h3>カースト：効果が決まる</h3>
+      <p>職アリ・兵アリ・羽アリ・女王アリ</p>
+      <p class="small">どのカーストも、ポイントでは1枚分として数えます。</p>
+    </div>
+  </div>
+
+  <h3>羽アリと女王アリ</h3>
+  <ul>
+    <li>女王アリは山札に入っていません。種類ごとに1枚ずつ、別に用意されています。</li>
+    <li>羽アリを置くと、次の自分のターン開始時に女王アリと入れ替わります。使った羽アリは捨て札へ移ります。</li>
+    <li>女王アリになったときに、同じ種類の職アリを山札から2枚、手札に加えます。</li>
+    <li>女王アリになる前に羽アリを駆除されると、女王アリにはなりません。</li>
+  </ul>
+
+  <h3>兵アリ</h3>
+  <ul>
+    <li>兵アリがいるポイントへの薬剤散布を、1回無効にします（兵アリ1枚につき1回）。</li>
+    <li>ベイト工法は防げません。</li>
+  </ul>
+</section>
+
+<section id="cards">
+  <h2>6. カード一覧</h2>
+  <p>カード名の横の印の意味は次のとおりです。</p>
+  <ul class="small">
+    <li><span class="chip tuning">調整中</span>：内容や数値を、試遊しながら調整している最中のカードです。</li>
+    <li><span class="provisional">名称は仮</span>：カードの名前がまだ仮のものです。</li>
+  </ul>
+  <p class="small">コスト：カードを使うときに払う行動力です。枚数：どちらの山札に何枚入るかです。</p>
+  <div class="filters" role="group" aria-label="カードの絞り込み" id="filters">
+    <button type="button" data-f="all" aria-pressed="true">すべて</button>
+    <button type="button" data-f="termite" aria-pressed="false">シロアリ側</button>
+    <button type="button" data-f="pest" aria-pressed="false">防除業者側</button>
+    <button type="button" data-f="neutral" aria-pressed="false">両方の山札に入る中立</button>
+  </div>
+  <p class="count-line screen-only" id="countLine" aria-live="polite"></p>
+  <div id="cardArea"><p>カードを読み込んでいます…</p></div>
+</section>
+
+<section id="rules">
+  <h2>7. 細かいルール（Q&amp;A）</h2>
+
+  <h3>カードの使い方</h3>
+  <details class="qa" open><summary>1ターンに何枚までカードを使えますか。</summary><div>行動力が足りる限り、枚数の上限はありません。</div></details>
+  <details class="qa" open><summary>同じポイントに何枚でも置けますか。</summary><div>シロアリカードは、1ターンに同じポイントへ1枚までです。防除・駆除・イベント・中立のカードにはこの制限はありません。たとえば、薬剤散布を続けて使うことや、薬剤散布・バリア工法とベイト工法を一緒に使うことができます。</div></details>
+  <details class="qa" open><summary>偵察や妨害は、いつでも使えますか。</summary><div>相手の手札が1枚もないときは使えません。</div></details>
+  <details class="qa" open><summary>予知はどう使いますか。</summary><div>自分の山札の上3枚を見て、1枚を手札に加えます。残りの2枚は、好きな順番で山札の下に置きます。</div></details>
+  <details class="qa" open><summary>イベントカードや中立カードは、いつ使いますか。</summary><div>ほかのカードと同じく手札に入ります。持ち主が、自分のターン中の好きなタイミングで使います。</div></details>
+
+  <h3>カード効果の共通ルール</h3>
+  <details class="qa" open><summary>「次の自分のターンまで」続く効果は、いつ切れますか。</summary><div>そのカードを使った人の、次のターンが始まるときに切れます。</div></details>
+  <details class="qa" open><summary>完全侵食されたポイントに、カードは使えますか。</summary><div>使えません。完全侵食されたポイントは、すべてのカードの対象外です。</div></details>
+  <details class="qa" open><summary>山札から特定のカードを手札に加える効果で、そのカードが山札に残っていないときは。</summary><div>何も起こりません（空振りになります）。</div></details>
+  <details class="qa" open><summary>ベイト工法はいつ効きますか。</summary><div>置いてから2回目の、自分のターンが始まるときに効きます。そのポイントにいるヤマトシロアリとイエシロアリをすべて取り除きます。カンザイシロアリは対象外です。同じポイントに重ねて置くことはできません（この点は仮の扱いです）。</div></details>
+  <details class="qa" open><summary>バリア工法はどのくらい続きますか。</summary><div>置いてから3ターンの間、そのポイントにシロアリカードを置けなくします。「3ターン」の数え方は、第8章で確認中です。</div></details>
+  <details class="qa" open><summary>大量発生を使うとどうなりますか。</summary><div>シロアリ側の次のターンが始まるときまで、そのポイントに防除・駆除カードを置けなくなります。シロアリ側は、そのポイントにカードを置けます。</div></details>
+</section>
+
+<section id="pending">
+  <h2>8. 確認中の点（ご意見をお聞かせください）</h2>
+  <p>次の点は、まだ決まっていません。お気づきの点やご意見をお聞かせください。</p>
+
+  <h3>ご確認いただきたい点</h3>
+  <ul class="ask">
+    <li><b>防除・駆除カードの効果、およびシロアリの種類と工法の対応</b><br>バリア工法・薬剤散布・ベイト工法の効果が、シロアリの生態に照らして妥当かをご確認いただきたいです。</li>
+    <li><b>置ける場所の対応表</b><br>第4章の表（どのシロアリがどのポイントに置けるか）が、実際の生態と合っているかをご確認いただきたいです。</li>
+  </ul>
+
+  <h3>実装にあたって仮に決めている点</h3>
+  <ul class="ask">
+    <li>バリア工法の「3ターン」は、防除側の自分のターン3回分と数える仮定です（シロアリ側の手番を3回ふさぎ、防除側の3回後のターン開始時に切れます）。</li>
+    <li>同じ種類の女王アリがすでに場にいるときに、2枚目の羽アリを置いた場合は、女王アリにならず羽アリのまま残る仮定です。</li>
+    <li>カードを使わずにターンを終え続けると、山札が減らず対戦が終わりません。その安全装置として、通算1000ターンで引き分けとする仮定です。</li>
+  </ul>
+
+  <h3>ほかにも調整中の項目</h3>
+  <ul>
+    <li>山札の配分（現在はシロアリ山札50枚・防除山札50枚。試遊をしながら調整します）</li>
+    <li>各カードの絵・名前の確定</li>
+    <li>CPUの強さの設定、チュートリアル、結果画面の内容</li>
+  </ul>
+</section>
+</main>
+
+<footer>
+  <p>この資料の内容は 2026-11-13 時点の仕様です。未確定の項目を含みます。</p>
+  <p><a href="proto/">ブラウザで試遊できる試作版を開く</a><br>
+  <span class="small muted">試作版は、この仕様の一つ前の版で作ったものです。細部がこの資料と異なる場合があります。</span></p>
+</footer>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  // やさしい言い方の効果(e)と補足(s)。カードIDをキーにする
+  var WORKER = '基本の侵食カードです。置いたポイントで1枚分として数えます。';
+  var SOLDIER = '置いたポイントで1枚分として数えます。いるポイントへの薬剤散布を1回無効にします（兵アリ1枚につき1回）。';
+  var WING = '置いたポイントで1枚分として数えます。次の自分のターン開始時に女王アリと入れ替わり、同じ種類の職アリを山札から2枚手札に加えます。';
+  var QUEEN = '置いたポイントで1枚分として数えます。女王アリになったときに、同じ種類の職アリを山札から2枚手札に加えます（山札にないときは何も起こりません）。';
+  var DESC = {
+    'worker-yamato': { e: WORKER },
+    'worker-ie': { e: WORKER },
+    'worker-kanzai': { e: WORKER },
+    'soldier-yamato': { e: SOLDIER, s: 'ベイト工法は防げません。' },
+    'soldier-ie': { e: SOLDIER, s: 'ベイト工法は防げません。' },
+    'soldier-kanzai': { e: SOLDIER, s: 'ベイト工法は防げません。' },
+    'winged-yamato': { e: WING, s: '女王アリになる前に駆除されると、女王アリにはなりません。' },
+    'winged-ie': { e: WING, s: '女王アリになる前に駆除されると、女王アリにはなりません。' },
+    'winged-kanzai': { e: WING, s: '女王アリになる前に駆除されると、女王アリにはなりません。' },
+    'queen-yamato': { e: QUEEN, s: '手札から出すカードではないので、コストはありません。山札には入らず、羽アリが成ったときだけ場に出ます。' },
+    'queen-ie': { e: QUEEN, s: '手札から出すカードではないので、コストはありません。山札には入らず、羽アリが成ったときだけ場に出ます。' },
+    'queen-kanzai': { e: QUEEN, s: '手札から出すカードではないので、コストはありません。山札には入らず、羽アリが成ったときだけ場に出ます。' },
+    'reinforce': { e: '自分の山札からカードを2枚引きます。' },
+    'scout': { e: '相手の手札をすべて見ることができます。', s: '相手の手札がないときは使えません。' },
+    'disrupt': { e: '相手の手札から、ランダムに1枚を捨てさせます。', s: '相手の手札がないときは使えません。' },
+    'foresight': { e: '自分の山札の上3枚を見て、1枚を手札に加えます。残りは好きな順番で山札の下に置きます。' },
+    'barrier': { e: '指定したポイントに、3ターンの間、シロアリカードを置けなくします。', s: '効果は、ご確認いただいたうえで確定します。「3ターン」の数え方は第8章をご覧ください。' },
+    'spray': { e: '指定したポイントのシロアリカードを1枚取り除きます（仮：最後に置かれたカード）。', s: '兵アリがいるポイントでは、1回無効になります。' },
+    'bait': { e: '置いてから2回目の自分のターン開始時に、指定したポイントのヤマトシロアリとイエシロアリをすべて取り除きます。カンザイシロアリは対象外です。', s: '同じポイントへの重ね置きはできません（仮）。効果は、ご確認いただいたうえで確定します。' },
+    'import-furniture': { e: '山札からカンザイシロアリを1枚、手札に加えます（その場で使い切りで、場には残りません）。', s: '山札にカンザイシロアリがないときは何も起こりません。複数あるときは、山札で最初に見つかったものを加えます（仮）。' },
+    'swarm': { e: '指定したポイントに、シロアリ側の次のターン開始時まで、防除・駆除カードを置けなくします。シロアリ側は、そのポイントにカードを置けます。' }
+  };
+  var PROVISIONAL = { reinforce: 1, scout: 1, disrupt: 1, foresight: 1, swarm: 1 };
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  function style(card) {
+    var cat = card.category || '';
+    if (cat === 'シロアリ') {
+      var sp = card.id.split('-')[1];
+      if (sp === 'yamato') return { cls: 'yamato', label: 'シロアリ（ヤマト）' };
+      if (sp === 'ie') return { cls: 'ie', label: 'シロアリ（イエ）' };
+      if (sp === 'kanzai') return { cls: 'kanzai', label: 'シロアリ（カンザイ）' };
+      return { cls: 'ie', label: 'シロアリ' };
+    }
+    if (cat === '防除') return { cls: 'boujo', label: '防除' };
+    if (cat === '駆除') return { cls: 'kujo', label: '駆除' };
+    if (cat.indexOf('イベント') === 0) return { cls: 'event', label: 'イベント（シロアリ側）' };
+    if (cat === '中立') return { cls: 'neutral', label: '中立' };
+    return { cls: 'neutral', label: cat };
+  }
+
+  function side(card) {
+    var c = card.counts || {};
+    if ((c.termite > 0) && (c.pest > 0)) return 'neutral';
+    if (c.pest > 0) return 'pest';
+    return 'termite'; // シロアリ山札のみ、および山札外の女王アリ
+  }
+
+  function countText(card) {
+    var c = card.counts || {};
+    var parts = [];
+    if (c.termite > 0) parts.push('シロアリ山札 ' + c.termite + '枚');
+    if (c.pest > 0) parts.push('防除山札 ' + c.pest + '枚');
+    if (!parts.length) parts.push('山札には入りません');
+    return parts.join(' ／ ');
+  }
+
+  function buildCard(card) {
+    var st = style(card);
+    var li = el('li', 'card ' + st.cls);
+    li.setAttribute('data-side', side(card));
+    var head = el('div', 'head');
+    head.appendChild(el('h3', 'name', card.name));
+    head.appendChild(el('span', 'chip ' + st.cls, st.label));
+    if (card.status === 'たたき台') head.appendChild(el('span', 'chip tuning', '調整中'));
+    var isQueen = card.id.indexOf('queen-') === 0;
+    if (isQueen) head.appendChild(el('span', 'chip queen', '山札には入らない'));
+    if (PROVISIONAL[card.id] || /名称は仮/.test(card.memo || '')) head.appendChild(el('span', 'provisional', '名称は仮'));
+    li.appendChild(head);
+
+    var meta = el('p', 'meta');
+    var b1 = el('b', null, 'コスト：');
+    meta.appendChild(b1);
+    meta.appendChild(document.createTextNode(card.cost == null || card.cost === 'なし' ? 'なし' : String(card.cost)));
+    meta.appendChild(document.createTextNode('　'));
+    meta.appendChild(el('b', null, '枚数：'));
+    meta.appendChild(document.createTextNode(countText(card)));
+    li.appendChild(meta);
+
+    var d = DESC[card.id];
+    li.appendChild(el('p', 'effect', d ? d.e : (card.effect || '')));
+    if (d && d.s) li.appendChild(el('p', 'sub', '補足：' + d.s));
+    else if (!d && card.memo) li.appendChild(el('p', 'sub', '補足：' + card.memo));
+    return li;
+  }
+
+  var allCards = [];
+  var current = 'all';
+
+  function render() {
+    var area = document.getElementById('cardArea');
+    area.textContent = '';
+    var shown = 0;
+    var groups = [
+      { key: 'termite', title: 'シロアリ側のカード' },
+      { key: 'neutral', title: '両方の山札に入る中立のカード' },
+      { key: 'pest', title: '防除業者側のカード' }
+    ];
+    groups.forEach(function (g) {
+      if (current !== 'all' && current !== g.key) return;
+      var list = allCards.filter(function (c) { return side(c) === g.key; });
+      if (!list.length) return;
+      area.appendChild(el('h3', null, g.title));
+      if (g.key === 'termite') {
+        var q = el('p', 'small muted', '女王アリの3枚は山札には入らず、羽アリが成ったときだけ場に出ます。');
+        area.appendChild(q);
+      }
+      if (g.key === 'neutral') {
+        area.appendChild(el('p', 'small muted', 'どちらの陣営でも使えます。枚数は山札ごとに異なります。'));
+      }
+      var ul = el('ul', 'cards');
+      list.forEach(function (c) { ul.appendChild(buildCard(c)); shown++; });
+      area.appendChild(ul);
+    });
+    document.getElementById('countLine').textContent = shown + '種類のカードを表示しています。';
+  }
+
+  function fail(msg) {
+    var area = document.getElementById('cardArea');
+    area.textContent = '';
+    var box = el('div', 'loaderr');
+    box.appendChild(el('p', null, 'カードのデータを読み込めませんでした。' + (msg ? '（' + msg + '）' : '')));
+    var p = el('p', 'small');
+    p.appendChild(document.createTextNode('ローカルで見るときは、docs フォルダで '));
+    p.appendChild(el('code', null, 'python3 -m http.server'));
+    p.appendChild(document.createTextNode(' を実行してから、表示されたアドレスを開いてください。'));
+    box.appendChild(p);
+    area.appendChild(box);
+  }
+
+  function isListed(c) {
+    if (c.status === '没') return false;
+    var k = c.counts || {};
+    if (c.id.indexOf('queen-') === 0) return true;
+    return (k.termite > 0) || (k.pest > 0);
+  }
+
+  document.getElementById('filters').addEventListener('click', function (ev) {
+    var btn = ev.target.closest('button[data-f]');
+    if (!btn) return;
+    current = btn.getAttribute('data-f');
+    var all = document.querySelectorAll('#filters button');
+    for (var i = 0; i < all.length; i++) all[i].setAttribute('aria-pressed', all[i] === btn ? 'true' : 'false');
+    render();
+  });
+
+  // 印刷時は全カードを出す
+  var before = null;
+  window.addEventListener('beforeprint', function () { before = current; current = 'all'; render(); });
+  window.addEventListener('afterprint', function () { if (before) { current = before; before = null; render(); } });
+
+  fetch('spec/cards.json').then(function (r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  }).then(function (data) {
+    allCards = (data.cards || []).filter(isListed);
+    if (!allCards.length) throw new Error('カードがありません');
+    render();
+  }).catch(function (e) { fail(e && e.message); });
+})();
+</script>
+</body>
+</html>

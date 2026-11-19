@@ -1,0 +1,19 @@
+{
+  "name": "spec-sync",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Notion の仕様書・カード一覧を、リポジトリの docs/spec/ に写す同期スクリプト",
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "spec:sync": "tsx scripts/spec-sync.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
+}

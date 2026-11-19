@@ -4,8 +4,8 @@
 
 - Unity 6000.2.8f1、2D(Built-in)テンプレート、uGUI を使います。スマホの縦画面専用で、参照解像度は 1080×1920 です
 - `com.unity.pipeline` を入れてあるので、unity CLI からエディタを操作できます
-- 仕様の正は Notion の仕様書です。写しは `shiroari-bojo` リポジトリの `docs/spec/`(spec.md・cards.md・cards.json)にあります
-- ルールと CPU は、モック `omen-Inc/sb-proto`(index.html)を C# に移したものです
+- 仕様の正は Notion の仕様書です。写しは本リポジトリの `docs/spec/`(spec.md・cards.md・cards.json)にあります。Notion からの更新は `Tools/spec-sync` です(下の「仕様の同期」)
+- ルールと CPU は、ブラウザ版の試作版 `docs/proto/index.html`(元は `omen-Inc/sb-proto`。アーカイブ済み)を C# に移したものです
 
 ## 構成
 
@@ -26,6 +26,44 @@ Assets/
     Simulation/Simulator.cs        CPU 同士の対戦と集計
   Scripts/Editor/SimulationMenu.cs シミュレーターのメニューとバッチ用メソッド
   Tests/EditMode/                  EditMode テスト(asmdef ShiroariBojo.Tests.EditMode)
+docs/                              GitHub Pages で公開するフォルダ(main ブランチの /docs)
+  index.html                       クライアント向けのルール・カード解説ページ
+  proto/                           ブラウザ版の試作版(元 sb-proto)
+  spec/                            Notion の仕様書の写し(spec.md・cards.md・cards.json)
+  .nojekyll                        Jekyll を通さないための空ファイル
+Tools/spec-sync/                   Notion から docs/spec/ へ同期するスクリプト(Node.js)
+```
+
+## 公開ページ(GitHub Pages)
+
+main ブランチの `/docs` フォルダを公開する予定です。
+
+- ルール・カード解説ページ:https://omen-inc.github.io/shiroari-bojo-unity/
+- ブラウザ版の試作版:https://omen-inc.github.io/shiroari-bojo-unity/proto/
+
+ローカルでの確認は、docs で簡易サーバーを立てます(http://localhost:8000/ と http://localhost:8000/proto/)。
+
+```bash
+cd docs && python3 -m http.server 8000
+```
+
+## 仕様の同期(Notion → docs/spec/)
+
+`NOTION_TOKEN`(Notion の内部インテグレーションのトークン。環境変数で渡す。リポジトリには入れない)で Notion を読み取り専用で読み、`docs/spec/` を更新します。Node.js 24 以上が必要です。
+
+```bash
+cd Tools/spec-sync
+npm install                  # 初回のみ
+NOTION_TOKEN=... npm run spec:sync -- --changes /tmp/changes.json   # --changes は省略可(変更点を JSON で書き出す)
+npm test                     # 同期スクリプトのテスト
+```
+
+同期しても `Assets/Data/cards.json` は自動では更新されません。cards.json が変わったときは、差分を確かめてからコピーし直します。
+
+```bash
+cd /Users/a.nakashima/shiroari-bojo-unity
+git diff docs/spec/cards.json
+cp docs/spec/cards.json Assets/Data/cards.json
 ```
 
 ## テストの実行
@@ -52,7 +90,7 @@ P=/Users/a.nakashima/shiroari-bojo-unity
     -simGames 1000 -simSeed 1 [-simOut /path/to/result.txt]
   ```
 
-結果はコンソールと `Logs/Simulation/sim-<日時>.txt` に出ます(`-simOut` で出力先を変更できます)。`-simJson <パス>` を付けると、夜間の自動開発の報告用に JSON も書き出します(`{"games":1000,"seed":"1","winRate":{"termite":0.37,"pest":0.63},"draws":0,"avgTurns":34.1,"cards":[{"id":"...","name":"...","side":"termite|pest|neutral","useRate":0.88,"winContribution":-0.01,"drawn":3738,"played":3277,"gamesUsed":997}]}`。率は 0〜1。`useRate` は使った回数 / 手札に来た回数、`winContribution` はそのカードを使った (試合, 陣営) の勝率 − その陣営の全体勝率で、Web 版 shiroari-bojo の `npm run sim` と同じ定義です。山札に入らないカードは出しません)。出る項目は、陣営別の勝率(先攻別も)、平均ターン数、平均完全侵食数、枯れ木が倒れた割合、カード別使用率(使った回数 / 手札に来た回数)です。シードが同じなら結果も同じになります。
+結果はコンソールと `Logs/Simulation/sim-<日時>.txt` に出ます(`-simOut` で出力先を変更できます)。`-simJson <パス>` を付けると、夜間の自動開発の報告用に JSON も書き出します(`{"games":1000,"seed":"1","winRate":{"termite":0.37,"pest":0.63},"draws":0,"avgTurns":34.1,"cards":[{"id":"...","name":"...","side":"termite|pest|neutral","useRate":0.88,"winContribution":-0.01,"drawn":3738,"played":3277,"gamesUsed":997}]}`。率は 0〜1。`useRate` は使った回数 / 手札に来た回数、`winContribution` はそのカードを使った (試合, 陣営) の勝率 − その陣営の全体勝率で、Web 版(旧 shiroari-bojo。アーカイブ済み)の `npm run sim` と同じ定義です。山札に入らないカードは出しません)。出る項目は、陣営別の勝率(先攻別も)、平均ターン数、平均完全侵食数、枯れ木が倒れた割合、カード別使用率(使った回数 / 手札に来た回数)です。シードが同じなら結果も同じになります。
 
 ## Core の使い方(画面から呼ぶ API)
 
