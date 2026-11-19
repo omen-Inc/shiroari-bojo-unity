@@ -1,10 +1,10 @@
 # このリポジトリで作業する AI 向けの決まり
 
 ## 仕様
-- 仕様の正は Notion の仕様書です。写しは `shiroari-bojo` リポジトリの `docs/spec/`(spec.md・cards.md・cards.json。`npm run spec:sync` で更新)にあります。このリポジトリの中で仕様を書き換えたり、作ったりしないでください
+- 仕様の正は Notion の仕様書です。写しは本リポジトリの `docs/spec/`(spec.md・cards.md・cards.json。`Tools/spec-sync` の `npm run spec:sync` で更新)にあります。このリポジトリの中で仕様を書き換えたり、作ったりしないでください
 - カードデータは `Assets/Data/cards.json` です。Notion の写し(`docs/spec/cards.json`)をコピーしたもので、手で編集しません。更新するときは写しからコピーし直します
 - 仕様が曖昧な点を勝手に決めないでください。決めた仮定は報告し、コードには「仮:」とコメントを残します
-- ルールと CPU は sb-proto(`omen-Inc/sb-proto` の index.html)を引き継いでいます。sb-proto と仕様書が食い違うときは、仕様書に合わせます
+- ルールと CPU は sb-proto(`docs/proto/index.html`。元は `omen-Inc/sb-proto`。アーカイブ済み)を引き継いでいます。sb-proto と仕様書が食い違うときは、仕様書に合わせます
 
 ## Core(Assets/Scripts/Core)
 - asmdef `ShiroariBojo.Core` は `noEngineReferences: true` です。UnityEngine・UnityEditor を参照しません。ファイル I/O もしません(JSON は文字列で受け取ります)
