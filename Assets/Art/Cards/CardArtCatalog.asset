@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 542cfd72349ef204183ad2425a7069c4, type: 3}
+  m_Name: CardArtCatalog
+  m_EditorClassIdentifier: ShiroariBojo.UI::ShiroariBojo.UI.CardArtCatalog
+  back: {fileID: 21300000, guid: dea88172568c26442abd3e41fe3e113a, type: 3}
+  entries:
+  - cardId: worker-yamato
+    art: {fileID: 21300000, guid: 00c745b4019ba814785b50f61754e8c2, type: 3}
+  - cardId: worker-ie
+    art: {fileID: 21300000, guid: f35555e2f28c77744b26eaf115293240, type: 3}
+  - cardId: worker-kanzai
+    art: {fileID: 21300000, guid: 542ce17b17e385b4e8a138bde6803f87, type: 3}
+  - cardId: soldier-yamato
+    art: {fileID: 21300000, guid: b08a907f4441dd34fb118f13337456ec, type: 3}
+  - cardId: soldier-ie
+    art: {fileID: 21300000, guid: 771e71d8bf680d04ab266ce720f9ce65, type: 3}
+  - cardId: soldier-kanzai
+    art: {fileID: 21300000, guid: d9d3c7589d333b8498e554b0e66197aa, type: 3}
+  - cardId: winged-yamato
+    art: {fileID: 21300000, guid: a783cb3a0e1767840b35b03a4493507a, type: 3}
+  - cardId: winged-ie
+    art: {fileID: 21300000, guid: d047f245b09b3154ca1c0b5a37c5c5f1, type: 3}
+  - cardId: winged-kanzai
+    art: {fileID: 21300000, guid: d24fe22fe534ae642997ec71fe62015c, type: 3}
+  - cardId: queen-yamato
+    art: {fileID: 21300000, guid: 1f343dccc234c4d42b8929e0d787542e, type: 3}
+  - cardId: queen-ie
+    art: {fileID: 21300000, guid: 0bc892721467744458009bc35f22bab5, type: 3}
+  - cardId: queen-kanzai
+    art: {fileID: 21300000, guid: ed03511aaf330e248ae8b4ce8d0061de, type: 3}
+  - cardId: reinforce
+    art: {fileID: 21300000, guid: c22fb38bf7a91ef42833f3f694b1572f, type: 3}
+  - cardId: scout
+    art: {fileID: 21300000, guid: 1b283ff887c3da34ead56a4a01768f5b, type: 3}
+  - cardId: disrupt
+    art: {fileID: 21300000, guid: f64e34d9960230946ad2008e4c46f2a1, type: 3}
+  - cardId: foresight
+    art: {fileID: 21300000, guid: b4809dc213f6060479ce2db11d51100d, type: 3}
+  - cardId: barrier
+    art: {fileID: 21300000, guid: b4329012a21aa8647b62408ed13d1eb1, type: 3}
+  - cardId: spray
+    art: {fileID: 21300000, guid: c55408d25210ac4439c50b373bd02970, type: 3}
+  - cardId: bait
+    art: {fileID: 21300000, guid: 97aea6ed339bb88428e7e57c766daa75, type: 3}
+  - cardId: import-furniture
+    art: {fileID: 21300000, guid: efc9cb8d12010504f8d4a708f0a0b4a2, type: 3}
+  - cardId: swarm
+    art: {fileID: 21300000, guid: b367f9145d980c7409ae937860a10ec7, type: 3}

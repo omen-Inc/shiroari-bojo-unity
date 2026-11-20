@@ -1,0 +1,12 @@
+/* 段階2: 配色の上書き(段階1の common.css は変更しない)。ヤマト=黄土、イベント=鮮やかな橙 */
+.t-yamato{--c-main:#c9a21e;--c-dark:#6b5200;--c-light:#f5ecc2}
+.t-event{--c-main:#ff7a1a;--c-dark:#a33a00;--c-light:#ffe1c6}
+.t-ie{--c-main:#b5472f;--c-dark:#6b2214;--c-light:#f2d6cd}
+.t-kanzai{--c-main:#8a5bb5;--c-dark:#4b2a73;--c-light:#e6dbf1}
+.t-boujo{--c-main:#3f9a5a;--c-dark:#1c5a31;--c-light:#d8eedd}
+.t-kujo{--c-main:#3a7bc0;--c-dark:#17406f;--c-light:#d7e6f6}
+.t-neutral{--c-main:#8a8d92;--c-dark:#46484c;--c-light:#e6e7e9}
+.cost.none span{font-size:72px}
+.back{position:relative;width:630px;height:880px;border-radius:44px;overflow:hidden;background:var(--c-main)}
+.back img{width:100%;height:100%;object-fit:cover;display:block}
+.back.noimg{display:flex;align-items:center;justify-content:center;color:#fff;font:800 48px "M PLUS Rounded 1c","Hiragino Maru Gothic ProN",sans-serif}
