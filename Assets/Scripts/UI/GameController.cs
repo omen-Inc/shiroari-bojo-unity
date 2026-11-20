@@ -68,6 +68,8 @@ namespace ShiroariBojo.UI
         [SerializeField] private RectTransform handContainer;
         [SerializeField] private HandCardView handCardPrefab;
         [SerializeField] private TMP_Text handEmptyText;
+        [Tooltip("選んだカードの拡大表示")]
+        [SerializeField] private CardDetailView cardDetail;
 
         [Header("ログ")]
         [SerializeField] private ScrollRect logScroll;
@@ -161,6 +163,7 @@ namespace ShiroariBojo.UI
             resultPanel.SetActive(false);
             choicePanel.Hide();
             banner.SetActive(false);
+            cardDetail.Hide();
         }
 
         /// <param name="seed">0 なら fixedSeed、それも 0 なら毎回変える</param>
@@ -406,6 +409,10 @@ namespace ShiroariBojo.UI
             // 手札
             RenderHand(options, canAct && s.Phase == Phase.Main, myTurn && s.Phase == Phase.Main);
 
+            // 選んだカードの拡大表示(選んでいないときは消す)
+            if (sel != null && canAct && s.Phase == Phase.Main) cardDetail.Show(sel.Def, SelectionHint(sel), !sel.Usable);
+            else cardDetail.Hide();
+
             // メッセージとボタン
             messageText.text = Message(s, sel, canAct);
             cancelButton.gameObject.SetActive(sel != null && canAct);
@@ -477,8 +484,17 @@ namespace ShiroariBojo.UI
             if (!sel.Usable) sb.Append($"  <color={UiPalette.Tag(UiPalette.Danger)}><size=85%>{sel.Reason}</size></color>");
             else if (sel.NeedsTarget) sb.Append($"  <color={UiPalette.Tag(UiPalette.GoldText)}><size=85%>光っているポイントを選んでください</size></color>");
             else if (confirmUntargetedCards) sb.Append("  <size=85%>「使う」で発動</size>");
-            if (!string.IsNullOrEmpty(d.EffectText)) sb.Append($"\n<size=78%><color={UiPalette.Tag(UiPalette.Muted)}>{d.EffectText}</color></size>");
+            // 効果文は拡大表示(CardDetailView)に出すので、ここには出さない
             return sb.ToString();
+        }
+
+        /// <summary>選んだカードの拡大表示に添えるひとこと(使えない理由・操作の案内)。判定は HandOptions の結果を使う</summary>
+        private string SelectionHint(PlayOption sel)
+        {
+            if (!sel.Usable) return sel.Reason;
+            if (sel.NeedsTarget) return "光っているポイントを選んでください";
+            if (confirmUntargetedCards) return "「使う」で発動";
+            return null;
         }
 
         private void RenderLog()

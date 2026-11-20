@@ -1,0 +1,17 @@
+/* 設計座標: 630x880px (=63x88mm, 1mm=10px)。出力時に拡大して300dpi相当にする */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:630px;height:880px;overflow:hidden;background:transparent}
+.card{position:relative;width:630px;height:880px;overflow:hidden;
+  --c-main:#888;--c-dark:#444;--c-light:#eee}
+.art{overflow:hidden;background:#ccc}
+.art img{width:100%;height:100%;object-fit:cover;display:block}
+.art.noimg{display:flex;align-items:center;justify-content:center;background:#c9c9c9;color:#666;font:700 34px "Noto Sans JP","Hiragino Sans",sans-serif}
+.name span,.effect p{display:block}
+/* 種別テーマ色 */
+.t-yamato{--c-main:#e8892b;--c-dark:#9a4d0a;--c-light:#fbe6cc}
+.t-ie{--c-main:#b5472f;--c-dark:#6b2214;--c-light:#f2d6cd}
+.t-kanzai{--c-main:#8a5bb5;--c-dark:#4b2a73;--c-light:#e6dbf1}
+.t-boujo{--c-main:#3f9a5a;--c-dark:#1c5a31;--c-light:#d8eedd}
+.t-kujo{--c-main:#3a7bc0;--c-dark:#17406f;--c-light:#d7e6f6}
+.t-event{--c-main:#f0a030;--c-dark:#a05a00;--c-light:#fdebc8}
+.t-neutral{--c-main:#8a8d92;--c-dark:#46484c;--c-light:#e6e7e9}

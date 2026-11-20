@@ -40,6 +40,36 @@ namespace ShiroariBojo.UI
         public static readonly Color Ie = Hex(0xb8402f);
         public static readonly Color Kanzai = Hex(0x6d52a6);
 
+        // カードの種別の色(design/cards/frames/colors2.css。omen 決定)。
+        // シロアリは種(Species)で、それ以外は区分(CardKind)で決める。ベイト工法は仕様の区分「駆除」なので青。
+        public static readonly CardTheme CardYamato = new CardTheme(Hex(0xc9a21e), Hex(0x6b5200), Hex(0xf5ecc2));
+        public static readonly CardTheme CardIe = new CardTheme(Hex(0xb5472f), Hex(0x6b2214), Hex(0xf2d6cd));
+        public static readonly CardTheme CardKanzai = new CardTheme(Hex(0x8a5bb5), Hex(0x4b2a73), Hex(0xe6dbf1));
+        public static readonly CardTheme CardControl = new CardTheme(Hex(0x3f9a5a), Hex(0x1c5a31), Hex(0xd8eedd));
+        public static readonly CardTheme CardExtermination = new CardTheme(Hex(0x3a7bc0), Hex(0x17406f), Hex(0xd7e6f6));
+        public static readonly CardTheme CardEvent = new CardTheme(Hex(0xff7a1a), Hex(0xa33a00), Hex(0xffe1c6));
+        public static readonly CardTheme CardNeutral = new CardTheme(Hex(0x8a8d92), Hex(0x46484c), Hex(0xe6e7e9));
+        /// <summary>カードの内側のクリーム色</summary>
+        public static readonly Color CardCream = Hex(0xfffaf0);
+        /// <summary>コストの丸の黄色</summary>
+        public static readonly Color CardCost = Hex(0xffd23f);
+
+        public static CardTheme CardThemeOf(CardDef d)
+        {
+            switch (d.Kind)
+            {
+                case CardKind.Termite:
+                    // 仮:種のわからないシロアリカードは中立の灰にする
+                    return d.Species == Species.Yamato ? CardYamato : d.Species == Species.Ie ? CardIe
+                        : d.Species == Species.Kanzai ? CardKanzai : CardNeutral;
+                case CardKind.Control: return CardControl;
+                case CardKind.Extermination: return CardExtermination;
+                case CardKind.Event: return CardEvent;
+                // 仮:区分のわからないカード(Unknown)は中立の灰にする
+                default: return CardNeutral;
+            }
+        }
+
         public static Color SideColor(Side s) => s == Side.Termite ? Termite : Pest;
         public static Color SideSoft(Side s) => s == Side.Termite ? TermiteSoft : PestSoft;
         /// <summary>暗い背景(ログ)の上で読める陣営色</summary>
@@ -64,5 +94,20 @@ namespace ShiroariBojo.UI
 
         public static Color Hex(int rgb) =>
             new Color(((rgb >> 16) & 0xff) / 255f, ((rgb >> 8) & 0xff) / 255f, (rgb & 0xff) / 255f, 1f);
+    }
+
+    /// <summary>カードの種別の色。Main = 外枠・種別ラベル、Dark = 名前の帯・コストの文字、Light = 効果文の箱</summary>
+    public readonly struct CardTheme
+    {
+        public readonly Color Main;
+        public readonly Color Dark;
+        public readonly Color Light;
+
+        public CardTheme(Color main, Color dark, Color light)
+        {
+            Main = main;
+            Dark = dark;
+            Light = light;
+        }
     }
 }
