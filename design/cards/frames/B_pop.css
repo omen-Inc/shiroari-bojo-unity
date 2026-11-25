@@ -1,0 +1,15 @@
+/* B ポップ: 太め角丸・フラット・丸ゴ */
+.s-B_pop{background:var(--c-main);font-family:"M PLUS Rounded 1c","Zen Maru Gothic","Hiragino Maru Gothic ProN","Hiragino Sans",sans-serif;color:#2b2b2b;
+  border-radius:44px}
+.s-B_pop::before{content:"";position:absolute;inset:16px;background:#fffaf0;border-radius:32px}
+.s-B_pop .name{position:absolute;left:100px;right:34px;top:34px;height:92px;background:var(--c-dark);border-radius:30px;
+  display:flex;align-items:center;justify-content:center;padding:0 16px}
+.s-B_pop .name span{color:#fff;font-weight:800;font-size:40px;line-height:1.15;text-align:center}
+.s-B_pop .cost{position:absolute;left:28px;top:26px;width:104px;height:104px;border-radius:50%;background:#ffd23f;
+  border:8px solid #fffaf0;box-shadow:0 0 0 6px var(--c-dark);display:flex;align-items:center;justify-content:center;z-index:3}
+.s-B_pop .cost span{font-size:64px;font-weight:800;color:var(--c-dark);line-height:1}
+.s-B_pop .art{position:absolute;left:36px;right:36px;top:152px;height:calc((630px - 72px)*.75);border:10px solid var(--c-main);border-radius:30px;background:var(--c-light)}
+.s-B_pop .type{position:absolute;left:0;right:0;top:589px;text-align:center;z-index:2}
+.s-B_pop .type span{display:inline-block;background:var(--c-main);color:#fff;font-weight:800;font-size:28px;padding:5px 34px;border-radius:999px;border:5px solid #fffaf0;box-shadow:0 0 0 4px var(--c-main)}
+.s-B_pop .effect{position:absolute;left:36px;right:36px;top:650px;bottom:36px;background:var(--c-light);border-radius:26px;display:flex;align-items:center;padding:6px 20px}
+.s-B_pop .effect p{font-size:27px;line-height:1.5;font-weight:700}
