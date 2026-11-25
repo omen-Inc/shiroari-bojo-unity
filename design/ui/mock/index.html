@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>シロアリボージョ UI 試作</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- デバッグ用の帯(9:16 の枠の外。Unity には移さない) -->
+<div id="debug">
+  <span>画面</span>
+  <button data-dbg="select">陣営選択</button>
+  <button data-dbg="battle-pest">対戦(防除)</button>
+  <button data-dbg="battle-termite">対戦(シロアリ)</button>
+  <button data-dbg="midgame">途中の盤面</button>
+  <button data-dbg="result-win">結果(勝ち)</button>
+  <span>場面</span>
+  <button data-dbg="draw">ドロー2枚</button>
+  <button data-dbg="cpu">CPU の手番</button>
+  <button data-dbg="foresight">予知の選択</button>
+  <button data-dbg="handlimit">手札上限</button>
+  <button data-dbg="mulligan">手詰まり防止</button>
+  <button data-dbg="scout">偵察の結果</button>
+  <button data-dbg="destroy">完全侵食</button>
+  <button data-dbg="treefall">枯れ木が倒れる</button>
+  <button data-dbg="promote">羽アリ→女王</button>
+  <button data-dbg="banner">手番バナー</button>
+  <button data-dbg="win">勝利</button>
+  <button data-dbg="lose">敗北</button>
+  <button data-dbg="log">ログ</button>
+  <span>速度</span>
+  <button data-dbg="speed1">×1</button>
+  <button data-dbg="speed05">×0.5</button>
+</div>
+
+<div id="viewport">
+<div id="stage">
+
+  <!-- ───── 陣営選択 ───── -->
+  <section id="screen-select" class="screen">
+    <div class="select-logo">
+      <div class="word">シロアリボージョ<small>(仮)</small></div>
+      <div class="sub">シロアリ側と防除業者側に分かれて戦う、CPU 対戦のカードゲーム</div>
+    </div>
+    <div class="select-ask">どちらで遊びますか?</div>
+    <div class="side-card termite" data-side="termite">
+      <div class="art"><img src="../../../Assets/Art/Cards/Illustrations/ie_queen.png" alt=""></div>
+      <div class="name">シロアリ側</div>
+      <div class="goal"><b>勝ち方</b>8か所のうち5か所を完全侵食すれば勝ち。羽アリを女王アリに育てて一気に攻めよう</div>
+      <button class="btn primary go">シロアリ側で遊ぶ</button>
+    </div>
+    <div class="side-card pest" data-side="pest">
+      <div class="art"><img src="../../../Assets/Art/Cards/Illustrations/barrier.png" alt=""></div>
+      <div class="name">防除業者側</div>
+      <div class="goal"><b>勝ち方</b>シロアリの山札が尽きるまで家を守りきれば勝ち。薬剤散布・バリア工法・ベイト工法で家を守ろう</div>
+      <button class="btn primary go">防除業者側で遊ぶ</button>
+    </div>
+    <div class="select-note">先攻はコイントスで決まります</div>
+    <div class="select-foot">UI 試作(配置・操作・演出の確認用)</div>
+  </section>
+
+  <!-- ───── 対戦 ───── -->
+  <section id="screen-battle" class="screen">
+    <div id="opp">
+      <div class="avatar">CPU</div>
+      <div class="who">CPU<span class="chip"></span></div>
+      <div class="stats"></div>
+      <div class="thinking">考え中…</div>
+      <div id="opp-hand"></div>
+      <button class="btn secondary" id="btn-log"><span class="ico">☰</span>ログ</button>
+    </div>
+    <div id="goals">
+      <span class="label">完全侵食</span><span class="pips"></span><span class="num" id="g-destroyed">0/5</span>
+      <span class="turn" id="g-turn">ターン 1</span>
+      <span class="deck-ico"></span><span class="label">シロアリ山札</span><span class="num" id="g-deck">50</span>
+    </div>
+    <div id="field">
+      <div id="house"><div class="roof"></div><div class="wall"></div><div class="ground"></div></div>
+    </div>
+    <div id="ticker"><span></span></div>
+    <div id="info">
+      <div class="main"><div class="l1"></div><div class="l2"></div></div>
+      <button class="btn secondary cancel" id="btn-cancel">やめる</button>
+    </div>
+    <div id="me">
+      <div class="who">あなた<span class="chip"></span></div>
+      <div class="stats"><span class="pile" id="my-pile"><img src="../../../Assets/Art/Cards/back_common.png" alt=""></span><span id="my-stats"></span></div>
+      <div id="ap"><div class="orbs"></div><div class="lbl"></div></div>
+      <button class="btn" id="btn-end">ターン終了</button>
+    </div>
+    <div id="hand"></div>
+  </section>
+
+  <!-- ───── 結果 ───── -->
+  <section id="screen-result" class="screen">
+    <div id="res-emblem"><div class="roof"></div><div class="house"></div><div class="mark"></div></div>
+    <div id="res-title">勝利!</div>
+    <div id="res-reason"></div>
+    <div id="res-stats"></div>
+    <button class="btn primary" id="res-again">同じ陣営でもう一度</button>
+    <button class="btn secondary" id="res-swap">陣営を変えて遊ぶ</button>
+  </section>
+
+  <!-- 拡大表示 -->
+  <div id="detail">
+    <div class="shade"></div>
+    <div class="hint"></div>
+    <div class="holder"></div>
+    <div class="btns">
+      <button class="btn secondary back">もどす</button>
+      <button class="btn primary use">使う</button>
+    </div>
+    <div class="swipe">カードを上に引き上げても使えます</div>
+  </div>
+
+  <!-- 選択シート(予知・手札上限・手詰まり防止・偵察) -->
+  <div id="sheet">
+    <div class="shade"></div>
+    <div class="panel">
+      <div class="grab"></div>
+      <div class="title"></div>
+      <div class="desc"></div>
+      <div class="cards"></div>
+      <div class="acts"></div>
+    </div>
+  </div>
+
+  <!-- ログ -->
+  <div id="log-shade"></div>
+  <div id="log"><h3>ログ<button class="btn secondary" id="btn-log-close">とじる</button></h3><div class="lines"></div></div>
+
+  <div id="fx"></div>
+</div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
