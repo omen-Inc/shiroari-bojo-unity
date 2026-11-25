@@ -1,0 +1,277 @@
+/* シロアリボージョ UI 試作。座標はすべて参照解像度 1080×1920 の px(Unity の CanvasScaler と同じ値)。
+   値の意味は design/ui/README.md の「デザイントークン」を参照。 */
+:root{
+  /* 基本色(UiPalette と B ポップの枠に合わせる) */
+  --bg-deep:#2f2a24; --bg-wood:#5a4632; --bg-wood-light:#7a5e42;
+  --cream:#fffaf0; --paper:#fffdf8; --mat:#f3ead8; --line:#ddd1bd;
+  --ink:#2b231c; --muted:#6f6254;
+  --cost:#ffd23f; --glow:#ffd23f; --gold-text:#a8740f;
+  --termite:#b8402f; --termite-dark:#6b2214; --termite-soft:#f3d9d2;
+  --pest:#2b7d72; --pest-dark:#14463f; --pest-soft:#d6ece8;
+  --danger:#bf3a2a; --danger-soft:#fbe3dd;
+  --zone-wet:#4f8fb5; --zone-dry:#a9855a; --zone-upper:#6c7a88; --zone-tree:#c9962c; --tree-soft:#fff3d6;
+  --sp-yamato:#c9a21e; --sp-ie:#b5472f; --sp-kanzai:#8a5bb5;
+  --barrier:#3f9a5a; --bait:#3a7bc0; --swarm:#ff7a1a;
+  /* 角丸・縁 */
+  --r-s:16px; --r-m:28px; --r-l:44px; --rim:6px;
+  --font:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Hiragino Sans","Noto Sans JP",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#1c1915;overflow:hidden;font-family:var(--font);color:var(--ink);-webkit-user-select:none;user-select:none}
+button{font-family:inherit;color:inherit}
+
+/* ───── デバッグ用の帯(9:16 の枠の外) ───── */
+#debug{position:fixed;left:0;right:0;top:0;height:36px;display:flex;gap:4px;align-items:center;padding:0 6px;overflow-x:auto;background:#111;z-index:100;white-space:nowrap}
+#debug span{color:#888;font:11px sans-serif;margin:0 4px}
+#debug button{font:11px sans-serif;padding:3px 7px;border-radius:4px;border:1px solid #444;background:#2a2a2a;color:#ddd;cursor:pointer;flex:none}
+#debug button:hover{background:#3a3a3a}
+#viewport{position:fixed;left:0;right:0;top:36px;bottom:0;display:flex;align-items:center;justify-content:center}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:0 0;overflow:hidden;background:var(--bg-deep)}
+
+.screen{position:absolute;inset:0;display:none}
+.screen.on{display:block}
+
+/* ───── 共通部品:ボタン(B ポップの「クリームの縁+外リング」を流用) ───── */
+.btn{position:absolute;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;
+  font-weight:800;border-radius:999px;border:var(--rim) solid var(--cream);transition:filter .15s}
+.btn.primary{background:var(--cost);color:var(--ink);box-shadow:0 0 0 5px var(--ink),0 10px 0 5px rgba(0,0,0,.35)}
+.btn.secondary{background:var(--mat);color:var(--ink);box-shadow:0 0 0 5px var(--muted),0 8px 0 5px rgba(0,0,0,.3)}
+.btn.side-pest{background:var(--pest);color:#fff;box-shadow:0 0 0 5px var(--pest-dark),0 10px 0 5px rgba(0,0,0,.35)}
+.btn.side-termite{background:var(--termite);color:#fff;box-shadow:0 0 0 5px var(--termite-dark),0 10px 0 5px rgba(0,0,0,.35)}
+.btn:disabled{filter:grayscale(.8) brightness(.8);cursor:default}
+.btn.pressed{transform:translateY(6px) scale(.96)}
+.inline-btn{position:relative}
+
+.chip{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 18px;font-weight:800;color:#fff;border:4px solid var(--cream)}
+.chip.pest{background:var(--pest)} .chip.termite{background:var(--termite)}
+
+/* ───── 陣営選択 ───── */
+#screen-select{background:radial-gradient(ellipse at 50% 0%,#7a5e42 0%,#4a3828 45%,#2f2a24 100%)}
+.select-logo{position:absolute;left:0;right:0;top:170px;text-align:center}
+.select-logo .word{display:inline-block;font-size:108px;font-weight:800;color:var(--cream);letter-spacing:2px;
+  -webkit-text-stroke:0;text-shadow:0 8px 0 var(--ink),0 0 0 var(--ink),6px 6px 0 var(--ink),-6px 6px 0 var(--ink),6px -2px 0 var(--ink),-6px -2px 0 var(--ink)}
+.select-logo .word small{font-size:54px}
+.select-logo .sub{margin-top:28px;font-size:34px;font-weight:700;color:#f3e3c8}
+.select-ask{position:absolute;left:0;right:0;top:500px;text-align:center;font-size:48px;font-weight:800;color:var(--cream)}
+.side-card{position:absolute;top:600px;width:470px;height:900px;border-radius:var(--r-l);border:10px solid var(--cream);cursor:pointer;overflow:hidden;
+  box-shadow:0 0 0 8px var(--ink),0 18px 0 8px rgba(0,0,0,.35)}
+.side-card.termite{left:52px;background:var(--termite)} .side-card.pest{left:558px;background:var(--pest)}
+.side-card .art{position:absolute;left:24px;right:24px;top:24px;height:290px;border-radius:var(--r-m);overflow:hidden;background:#0002;border:6px solid var(--cream)}
+.side-card .art img{width:100%;height:100%;object-fit:cover}
+.side-card .name{position:absolute;left:0;right:0;top:330px;text-align:center;color:#fff;font-size:56px;font-weight:800}
+.side-card .goal{position:absolute;left:30px;right:30px;top:420px;height:284px;background:var(--cream);border-radius:var(--r-m);padding:20px 24px;font-size:28px;line-height:1.5;overflow:hidden;font-weight:700;color:var(--ink)}
+.side-card .goal b{display:block;font-size:26px;color:var(--muted);margin-bottom:6px}
+.side-card .go{left:40px;right:40px;bottom:40px;height:116px;font-size:40px}
+.select-note{position:absolute;left:0;right:0;top:1580px;text-align:center;font-size:30px;font-weight:700;color:#e9d9bd}
+.select-foot{position:absolute;left:0;right:0;bottom:70px;text-align:center;font-size:24px;color:#bfae92}
+
+/* ───── 対戦画面 ───── */
+#screen-battle{background:linear-gradient(#3d3128 0,#2f2a24 260px,#4a3a2b 340px,#4a3a2b 1160px,#2f2a24 1260px,#2a241f 100%)}
+/* 相手の領域 */
+#opp{position:absolute;left:0;right:0;top:0;height:250px}
+#opp .avatar{position:absolute;left:36px;top:56px;width:140px;height:140px;border-radius:50%;border:8px solid var(--cream);display:flex;align-items:center;justify-content:center;font-size:44px;font-weight:800;color:#fff;box-shadow:0 0 0 6px var(--ink)}
+#opp .who{position:absolute;left:200px;top:60px;font-size:40px;font-weight:800;color:var(--cream)}
+#opp .who .chip{font-size:24px;margin-left:10px;vertical-align:middle}
+#opp .stats{position:absolute;left:200px;top:124px;font-size:26px;color:#e9d9bd;font-weight:700}
+#opp .thinking{position:absolute;left:200px;top:172px;font-size:26px;font-weight:800;color:var(--cost);display:none}
+#opp .thinking.on{display:block}
+#opp-hand{position:absolute;left:560px;top:30px;width:360px;height:200px}
+#opp-hand .back{position:absolute;width:110px;height:154px;border-radius:14px;overflow:hidden;border:4px solid var(--cream);box-shadow:0 4px 0 rgba(0,0,0,.35);transform-origin:50% 0%}
+#opp-hand .back img{width:100%;height:100%;object-fit:cover}
+#btn-log{right:30px;top:58px;width:110px;height:110px;font-size:26px;flex-direction:column;line-height:1.1}
+#btn-log .ico{font-size:34px}
+
+/* 勝ち筋の帯 */
+#goals{position:absolute;left:24px;right:24px;top:250px;height:84px;background:var(--cream);border-radius:999px;border:5px solid var(--ink);display:flex;align-items:center;padding:0 26px;gap:18px;font-weight:800}
+#goals .label{font-size:24px;color:var(--muted)}
+#goals .pips{display:flex;gap:8px}
+#goals .pip{width:40px;height:40px;clip-path:polygon(50% 0,100% 42%,100% 100%,0 100%,0 42%);background:var(--line)}
+#goals .pip.on{background:var(--danger)}
+#goals .num{font-size:36px;min-width:60px}
+#goals .turn{margin:0 auto;font-size:28px;color:#fff;background:var(--ink);border-radius:999px;padding:4px 22px}
+#goals .deck-ico{width:34px;height:44px;border-radius:6px;background:var(--termite);border:3px solid var(--ink)}
+
+/* 盤面(家の断面図) */
+#field{position:absolute;left:24px;right:24px;top:346px;height:810px}
+#house{position:absolute;inset:0}
+#house .roof{position:absolute;left:-10px;right:-10px;top:0;height:120px;background:#8c4a32;clip-path:polygon(50% 0,100% 100%,0 100%)}
+#house .wall{position:absolute;left:10px;right:10px;top:100px;height:532px;background:#e9dcc3;border-radius:12px 12px 0 0}
+#house .ground{position:absolute;left:-24px;right:-24px;top:630px;bottom:-4px;background:linear-gradient(#7fae5a,#5f8f43)}
+#house .zone-label{position:absolute;left:-14px;font-size:20px;font-weight:800;color:#fff;background:#0006;border-radius:0 12px 12px 0;padding:2px 10px;z-index:2}
+.tile{position:absolute;width:476px;height:170px;border-radius:var(--r-m);background:var(--paper);border:6px solid var(--zone-dry);overflow:hidden;cursor:default;transition:filter .2s}
+.tile .head{position:absolute;left:0;right:0;top:0;height:50px;display:flex;align-items:center;padding:0 16px;gap:10px;color:#fff}
+.tile .head .nm{font-size:28px;font-weight:800;white-space:nowrap}
+.tile .head .sp{margin-left:auto;display:flex;gap:6px}
+.tile .head .sp i{font-style:normal;font-size:19px;font-weight:800;background:var(--cream);border-radius:999px;padding:1px 10px}
+.tile .slots{position:absolute;left:16px;top:60px;display:flex;gap:10px;align-items:center}
+.tile .slot{position:relative;flex:none;width:56px;height:56px;border-radius:14px;border:4px dashed var(--line);background:#fff}
+.tile .slot.on{border:4px solid var(--cream);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:#fff;box-shadow:0 0 0 3px var(--ink)}
+.tile .slot .mk{position:absolute;right:-8px;top:-10px;font-size:16px;background:var(--ink);color:#fff;border-radius:999px;padding:0 6px;line-height:22px}
+.tile .prog{margin-left:6px;font-size:30px;font-weight:800;color:var(--muted)}
+.tile .head .zn{font-size:19px;font-weight:700;opacity:.9;white-space:nowrap}
+.tile .badges{position:absolute;right:12px;bottom:8px;display:flex;gap:6px}
+.tile .badge{font-size:19px;font-weight:800;color:#fff;border-radius:999px;padding:3px 14px;border:3px solid var(--cream)}
+.tile .badge.barrier{background:var(--barrier)} .tile .badge.bait{background:var(--bait)} .tile .badge.swarm{background:var(--swarm)}
+/* 完全侵食したポイントは x/必要枚数 の数字を消し、同じ場所(マスの右)に札だけを出す */
+.tile .stamp{flex:none;margin-left:10px;transform:rotate(-6deg);font-size:32px;line-height:1.3;font-weight:800;color:var(--danger);border:6px solid var(--danger);border-radius:14px;padding:0 14px;background:#fffd;white-space:nowrap}
+.tile.destroyed{background:var(--danger-soft);border-color:var(--danger)}
+.tile.tree{background:var(--tree-soft)}
+.tile.target{border-color:var(--glow);box-shadow:0 0 0 6px var(--glow),0 0 40px 10px rgba(255,210,63,.75);cursor:pointer;z-index:3}
+.tile.target::after{content:"ここ";position:absolute;right:14px;top:62px;font-size:22px;font-weight:800;background:var(--ink);color:var(--cost);border-radius:999px;padding:2px 14px}
+.tile.hover{transform:scale(1.04)}
+.field-dim .tile:not(.target){filter:brightness(.55) saturate(.6)}
+
+/* 案内の帯(盤面と自分のバーの間。常に同じ場所) */
+#info{position:absolute;left:24px;right:24px;top:1162px;height:100px;border-radius:var(--r-m);background:var(--cream);border:5px solid var(--ink);display:flex;align-items:center;padding:0 24px;gap:16px}
+#info .main{flex:1;min-width:0}
+#info .l1{font-size:28px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#info .l2{font-size:20px;line-height:1.3;font-weight:700;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#info .l1 .warn{color:var(--danger)} #info .l1 .guide{color:var(--gold-text)}
+#info .cancel{position:relative;flex:none;height:62px;padding:0 26px;font-size:26px}
+#info.mode-target{border-color:var(--gold-text);box-shadow:0 0 0 4px var(--glow)}
+
+/* 自分のバー */
+#me{position:absolute;left:0;right:0;top:1270px;height:130px}
+#me .who{position:absolute;left:30px;top:6px;font-size:28px;font-weight:800;color:var(--cream)}
+#me .who .chip{font-size:22px;margin-left:8px}
+#me .stats{position:absolute;left:30px;top:56px;font-size:23px;font-weight:700;color:#e9d9bd;display:flex;gap:18px;align-items:center}
+#me .pile{width:44px;height:58px;border-radius:8px;overflow:hidden;border:3px solid var(--cream)}
+#me .pile img{width:100%;height:100%;object-fit:cover}
+#ap{position:absolute;left:420px;top:4px;width:300px;text-align:center}
+#ap .orbs{display:flex;gap:18px;justify-content:center}
+#ap .orb{width:66px;height:66px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff6c4 0,var(--cost) 45%,#e0a82e 100%);border:5px solid var(--cream);box-shadow:0 0 0 4px var(--ink)}
+#ap .orb.off{background:#4a3f35;box-shadow:0 0 0 4px #1a1510;border-color:#6f6254}
+#ap .lbl{margin-top:6px;font-size:22px;font-weight:800;color:var(--cream)}
+#btn-end{right:30px;top:6px;width:280px;height:110px;font-size:36px}
+#btn-end.nudge{animation:nudge 1s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+
+/* 手札 */
+#hand{position:absolute;left:0;right:0;top:1400px;bottom:0}
+.hcard{position:absolute;left:0;top:0;width:240px;height:336px;transform-origin:50% 100%;cursor:pointer;touch-action:none}
+.hcard>.bpop-s,.hcard>.dim{width:300px;height:420px;transform:scale(.8);transform-origin:0 0;right:auto;bottom:auto}
+.hcard.usable .bpop-s{box-shadow:0 0 0 8px var(--glow),0 0 40px 12px rgba(255,210,63,.75)}
+.hcard.usable.pulse .bpop-s{animation:glow 1.2s ease-in-out infinite alternate}
+@keyframes glow{from{box-shadow:0 0 0 6px var(--glow),0 0 20px 4px rgba(255,210,63,.5)}to{box-shadow:0 0 0 10px var(--glow),0 0 50px 16px rgba(255,210,63,.9)}}
+.hcard .dim{position:absolute;inset:0;border-radius:21px;background:rgba(40,30,20,.5);display:none}
+.hcard.unusable .dim{display:block}
+.hcard.selected .bpop-s{box-shadow:0 0 0 7px #fff,0 0 0 13px var(--glow),0 0 44px 14px rgba(255,210,63,.8)}
+
+/* ───── カード:B ポップ(手札用の縮小版 300×420。design/cards/frames/B_pop.css を縮めたもの) ───── */
+.t-yamato{--c-main:#c9a21e;--c-dark:#6b5200;--c-light:#f5ecc2}
+.t-ie{--c-main:#b5472f;--c-dark:#6b2214;--c-light:#f2d6cd}
+.t-kanzai{--c-main:#8a5bb5;--c-dark:#4b2a73;--c-light:#e6dbf1}
+.t-boujo{--c-main:#3f9a5a;--c-dark:#1c5a31;--c-light:#d8eedd}
+.t-kujo{--c-main:#3a7bc0;--c-dark:#17406f;--c-light:#d7e6f6}
+.t-event{--c-main:#ff7a1a;--c-dark:#a33a00;--c-light:#ffe1c6}
+.t-neutral{--c-main:#8a8d92;--c-dark:#46484c;--c-light:#e6e7e9}
+.bpop-s{position:absolute;inset:0;border-radius:21px;background:var(--c-main);font-family:var(--font)}
+.bpop-s::before{content:"";position:absolute;inset:8px;background:var(--cream);border-radius:15px}
+.bpop-s .cost{position:absolute;left:8px;top:8px;width:70px;height:70px;border-radius:50%;background:var(--cost);border:5px solid var(--cream);box-shadow:0 0 0 4px var(--c-dark);display:flex;align-items:center;justify-content:center;z-index:3;font-size:40px;font-weight:800;color:var(--c-dark)}
+.bpop-s .name{position:absolute;left:56px;right:14px;top:16px;height:56px;background:var(--c-dark);border-radius:16px;display:flex;align-items:center;justify-content:center;padding:0 6px 0 22px;color:#fff;font-weight:800;font-size:27px;white-space:nowrap;overflow:hidden}
+.bpop-s .art{position:absolute;left:16px;right:16px;top:86px;height:254px;border:5px solid var(--c-main);border-radius:14px;overflow:hidden;background:var(--c-light)}
+.bpop-s .art img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.bpop-s .type{position:absolute;left:0;right:0;top:350px;text-align:center;z-index:2}
+.bpop-s .type span{display:inline-block;background:var(--c-main);color:#fff;font-weight:800;font-size:20px;padding:3px 18px;border-radius:999px;border:3px solid var(--cream);box-shadow:0 0 0 3px var(--c-main)}
+
+/* カード:B ポップ(拡大表示用。630×880 の設計座標そのまま。外側で scale する) */
+.bpop{position:absolute;left:0;top:0;width:630px;height:880px;border-radius:44px;background:var(--c-main);transform-origin:0 0;font-family:var(--font);color:#2b2b2b}
+.bpop::before{content:"";position:absolute;inset:16px;background:var(--cream);border-radius:32px}
+.bpop .name{position:absolute;left:100px;right:34px;top:34px;height:92px;background:var(--c-dark);border-radius:30px;display:flex;align-items:center;justify-content:center;padding:0 16px}
+.bpop .name span{color:#fff;font-weight:800;font-size:40px;line-height:1.15;text-align:center}
+.bpop .cost{position:absolute;left:28px;top:26px;width:104px;height:104px;border-radius:50%;background:var(--cost);border:8px solid var(--cream);box-shadow:0 0 0 6px var(--c-dark);display:flex;align-items:center;justify-content:center;z-index:3}
+.bpop .cost span{font-size:64px;font-weight:800;color:var(--c-dark);line-height:1}
+.bpop .art{position:absolute;left:36px;right:36px;top:152px;height:418px;border:10px solid var(--c-main);border-radius:30px;background:var(--c-light);overflow:hidden}
+.bpop .art img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.bpop .type{position:absolute;left:0;right:0;top:589px;text-align:center;z-index:2}
+.bpop .type span{display:inline-block;background:var(--c-main);color:#fff;font-weight:800;font-size:28px;padding:5px 34px;border-radius:999px;border:5px solid var(--cream);box-shadow:0 0 0 4px var(--c-main)}
+.bpop .effect{position:absolute;left:36px;right:36px;top:650px;bottom:36px;background:var(--c-light);border-radius:26px;display:flex;align-items:center;padding:6px 20px}
+.bpop .effect p{font-size:27px;line-height:1.5;font-weight:700}
+.cardback{position:absolute;border-radius:21px;overflow:hidden;border:5px solid var(--cream);background:#3f6e5e}
+.cardback img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* ───── 拡大表示(盤面の上半分〜中央に出す。下の帯・手札は隠さない) ───── */
+#detail{position:absolute;inset:0;display:none;z-index:40}
+#detail.on{display:block}
+#detail .shade{position:absolute;inset:0;background:rgba(20,14,8,.62)}
+#detail .holder{position:absolute;left:226px;top:250px;width:628px;height:877px}
+#detail .hint{position:absolute;left:60px;right:60px;top:150px;height:80px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;color:#fff;background:var(--ink);border:5px solid var(--cream)}
+#detail .hint.warn{background:var(--danger)}
+#detail .hint.guide{background:var(--gold-text)}
+#detail .btns{position:absolute;left:0;right:0;top:1150px;height:130px}
+#detail .use{left:300px;width:480px;top:0;height:120px;font-size:44px}
+#detail .back{left:40px;width:220px;top:10px;height:100px;font-size:32px}
+#detail .swipe{position:absolute;left:250px;right:250px;top:1296px;text-align:center;font-size:24px;font-weight:700;color:#e9d9bd;background:rgba(20,14,8,.85);border-radius:999px;padding:6px 0}
+
+/* ───── 下から出る選択シート ───── */
+#sheet{position:absolute;inset:0;display:none;z-index:50}
+#sheet.on{display:block}
+#sheet .shade{position:absolute;inset:0;background:rgba(20,14,8,.55)}
+#sheet .panel{position:absolute;left:0;right:0;bottom:0;height:1060px;background:var(--cream);border-radius:56px 56px 0 0;border-top:8px solid var(--ink);padding:30px 40px 0}
+#sheet .grab{width:140px;height:12px;border-radius:6px;background:var(--line);margin:0 auto 24px}
+#sheet .title{font-size:44px;font-weight:800;text-align:center}
+#sheet .desc{margin-top:14px;font-size:28px;font-weight:700;text-align:center;color:var(--muted);line-height:1.5;white-space:pre-line}
+#sheet .cards{position:relative;margin-top:30px;height:560px}
+#sheet .pick{position:absolute;width:300px;height:420px;cursor:pointer;transition:transform .18s cubic-bezier(.25,.46,.45,.94)}
+#sheet .pick.sel{transform:translateY(-30px) scale(1.04)}
+#sheet .pick.sel .bpop-s{box-shadow:0 0 0 7px #fff,0 0 0 13px var(--glow)}
+#sheet .pick .tag{position:absolute;left:50%;top:436px;transform:translateX(-50%);white-space:nowrap;font-size:26px;font-weight:800;color:#fff;background:var(--ink);border-radius:999px;padding:4px 20px}
+#sheet .pick .tag.red{background:var(--danger)} #sheet .pick .tag.gold{background:var(--gold-text)}
+#sheet .pick .x{position:absolute;inset:0;border-radius:21px;background:rgba(191,58,42,.35);display:none;align-items:center;justify-content:center;font-size:56px;font-weight:800;color:#fff;text-shadow:0 3px 0 var(--danger)}
+#sheet .pick.discard .x{display:flex}
+#sheet .acts{position:absolute;left:40px;right:40px;bottom:60px;height:130px}
+#sheet .acts .btn{top:0;height:116px;font-size:36px}
+#sheet .acts .ok{right:0;width:560px} #sheet .acts .sub{left:0;width:340px}
+#sheet .acts .ok.wide{left:0;width:auto;right:0}
+#sheet .scrollrow{position:absolute;left:-40px;right:-40px;top:0;height:560px;overflow-x:auto;overflow-y:hidden}
+
+/* ───── ログ(右から出る引き出し) ───── */
+#log{position:absolute;top:0;bottom:0;right:0;width:760px;z-index:60;transform:translateX(780px);background:rgba(28,22,16,.96);border-left:6px solid var(--cream);padding:40px 30px;display:flex;flex-direction:column}
+#log h3{color:var(--cream);font-size:38px;display:flex;align-items:center}
+#log h3 .btn{position:relative;margin-left:auto;height:80px;width:180px;font-size:28px}
+#log .lines{margin-top:24px;flex:1;overflow-y:auto;font-size:26px;line-height:1.55;color:#eee;font-weight:500}
+#log .lines div{padding:4px 0;border-bottom:1px solid #fff1}
+#log .lines .t{font-weight:800}
+#log-shade{position:absolute;inset:0;z-index:59;background:rgba(0,0,0,.4);display:none}
+#ticker{position:absolute;left:60px;right:60px;top:350px;height:64px;z-index:20;display:flex;justify-content:center;pointer-events:none}
+#ticker span{background:rgba(28,22,16,.88);color:#fff;font-size:26px;font-weight:700;border-radius:999px;padding:12px 30px;border:3px solid var(--cream);opacity:0;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+
+/* ───── 演出の層 ───── */
+#fx{position:absolute;inset:0;pointer-events:none;z-index:70}
+.fly{position:absolute;left:0;top:0;transform-origin:0 0}
+.banner{position:absolute;left:0;right:0;top:760px;height:220px;display:flex;align-items:center;justify-content:center;font-size:88px;font-weight:800;color:#fff;
+  border-top:10px solid var(--cream);border-bottom:10px solid var(--cream);text-shadow:0 6px 0 rgba(0,0,0,.35)}
+.banner.pest{background:repeating-linear-gradient(-45deg,var(--pest) 0 40px,#30897d 40px 80px)}
+.banner.termite{background:repeating-linear-gradient(-45deg,var(--termite) 0 40px,#c34c3a 40px 80px)}
+.banner.neutral{background:repeating-linear-gradient(-45deg,#4a3f35 0 40px,#554a3f 40px 80px)}
+.banner small{display:block;font-size:34px;text-align:center}
+.pop-text{position:absolute;font-size:44px;font-weight:800;color:#fff;-webkit-text-stroke:2px var(--ink);text-shadow:0 5px 0 var(--ink);white-space:nowrap}
+.coin{position:absolute;left:390px;top:660px;width:300px;height:300px;border-radius:50%;border:12px solid var(--cream);box-shadow:0 0 0 8px var(--ink);display:flex;align-items:center;justify-content:center;font-size:56px;font-weight:800;color:#fff;backface-visibility:visible}
+.mist{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(200,235,255,.95),rgba(150,210,255,0) 70%)}
+.shield{position:absolute;font-size:80px}
+
+/* 勝敗 */
+.verdict{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(20,14,8,.55)}
+.verdict .rays{position:absolute;left:-460px;top:-100px;width:2000px;height:2000px;background:repeating-conic-gradient(from 0deg,rgba(255,210,63,.32) 0 10deg,rgba(255,210,63,0) 10deg 20deg);border-radius:50%}
+.verdict .word{position:relative;font-size:200px;font-weight:800;color:var(--cost);text-shadow:0 12px 0 var(--ink),8px 8px 0 var(--ink),-8px 8px 0 var(--ink),8px -4px 0 var(--ink),-8px -4px 0 var(--ink)}
+.verdict.lose .word{color:#cfc6bb}
+.verdict .why{position:relative;margin-top:30px;font-size:36px;font-weight:800;color:#fff;background:var(--ink);border-radius:999px;padding:10px 36px;border:5px solid var(--cream)}
+.confetti{position:absolute;width:22px;height:34px;border-radius:4px}
+.grayout{filter:grayscale(.85) brightness(.7);transition:filter .6s}
+
+/* ───── 結果 ───── */
+#screen-result{background:radial-gradient(ellipse at 50% 30%,#7a5e42 0%,#3d3128 55%,#2a241f 100%)}
+#res-emblem{position:absolute;left:340px;top:200px;width:400px;height:400px}
+#res-emblem .house{position:absolute;left:60px;top:120px;width:280px;height:220px;background:var(--cream);border:10px solid var(--ink);border-radius:0 0 30px 30px}
+#res-emblem .roof{position:absolute;left:20px;top:20px;width:360px;height:130px;background:#8c4a32;clip-path:polygon(50% 0,100% 100%,0 100%)}
+#res-emblem .mark{position:absolute;left:130px;top:170px;width:140px;height:140px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:76px;font-weight:800;color:#fff;border:8px solid var(--cream);box-shadow:0 0 0 6px var(--ink)}
+#res-title{position:absolute;left:0;right:0;top:620px;text-align:center;font-size:170px;font-weight:800;color:var(--cost);text-shadow:0 10px 0 var(--ink),7px 7px 0 var(--ink),-7px 7px 0 var(--ink),7px -3px 0 var(--ink),-7px -3px 0 var(--ink)}
+#res-title.lose{color:#cfc6bb} #res-title.draw{color:var(--cream)}
+#res-reason{position:absolute;left:60px;right:60px;top:860px;text-align:center;font-size:34px;font-weight:800;color:var(--cream);line-height:1.6}
+#res-stats{position:absolute;left:90px;right:90px;top:1020px;height:460px;background:var(--cream);border-radius:var(--r-l);border:6px solid var(--ink);padding:30px 44px;font-size:30px;font-weight:700}
+#res-stats .row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:3px dotted var(--line)}
+#res-stats .row:last-child{border-bottom:none}
+#res-stats .row b{font-size:36px}
+#res-again{left:120px;right:120px;top:1530px;height:130px;font-size:44px}
+#res-swap{left:220px;right:220px;top:1700px;height:110px;font-size:34px}
+#sheet .sel-effect{position:absolute;left:0;right:0;top:500px;text-align:center;font-size:26px;font-weight:700;line-height:1.45;color:var(--ink);padding:0 20px}
